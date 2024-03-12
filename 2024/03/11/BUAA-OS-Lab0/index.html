@@ -29,19 +29,19 @@
 
     <!-- Custom CSS --> 
     
-        <!-- background effects start -->
         
-<link rel="stylesheet" href="/css/dusign-dark.css">
+<link rel="stylesheet" href="/css/dusign-light.css">
 
         
-<link rel="stylesheet" href="/css/dusign-common-dark.css">
+<link rel="stylesheet" href="/css/dusign-common-light.css">
 
         
-<link rel="stylesheet" href="/css/font-awesome.star.css">
+<link rel="stylesheet" href="/css/font-awesome.css">
 
         
 <link rel="stylesheet" href="/css/toc.css">
 
+        <!-- background effects end -->
     
     
     <!-- Pygments Highlight CSS -->
@@ -82,367 +82,6 @@
 
     <!-- background effects start -->
     
-        <canvas id="canv" width="1440" height="768"></canvas>
-<script>
-  var num = 200;
-  var w = window.innerWidth;
-  var h = window.innerHeight;
-  var max = 100;
-  var _x = 0;
-  var _y = 0;
-  var _z = 150;
-  var dtr = function(d) {
-    return d * Math.PI / 180;
-  };
-
-  var rnd = function() {
-    return Math.sin(Math.floor(Math.random() * 360) * Math.PI / 180);
-  };
-  var dist = function(p1, p2, p3) {
-    return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2) + Math.pow(p2.z - p1.z, 2));
-  };
-
-  var cam = {
-    obj: {
-      x: _x,
-      y: _y,
-      z: _z
-    },
-    dest: {
-      x: 0,
-      y: 0,
-      z: 1
-    },
-    dist: {
-      x: 0,
-      y: 0,
-      z: 200
-    },
-    ang: {
-      cplane: 0,
-      splane: 0,
-      ctheta: 0,
-      stheta: 0
-    },
-    zoom: 1,
-    disp: {
-      x: w / 2,
-      y: h / 2,
-      z: 0
-    },
-    upd: function() {
-      cam.dist.x = cam.dest.x - cam.obj.x;
-      cam.dist.y = cam.dest.y - cam.obj.y;
-      cam.dist.z = cam.dest.z - cam.obj.z;
-      cam.ang.cplane = -cam.dist.z / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z);
-      cam.ang.splane = cam.dist.x / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z);
-      cam.ang.ctheta = Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.z * cam.dist.z) / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.y * cam.dist.y + cam.dist.z * cam.dist.z);
-      cam.ang.stheta = -cam.dist.y / Math.sqrt(cam.dist.x * cam.dist.x + cam.dist.y * cam.dist.y + cam.dist.z * cam.dist.z);
-    }
-  };
-
-  var trans = {
-    parts: {
-      sz: function(p, sz) {
-        return {
-          x: p.x * sz.x,
-          y: p.y * sz.y,
-          z: p.z * sz.z
-        };
-      },
-      rot: {
-        x: function(p, rot) {
-          return {
-            x: p.x,
-            y: p.y * Math.cos(dtr(rot.x)) - p.z * Math.sin(dtr(rot.x)),
-            z: p.y * Math.sin(dtr(rot.x)) + p.z * Math.cos(dtr(rot.x))
-          };
-        },
-        y: function(p, rot) {
-          return {
-            x: p.x * Math.cos(dtr(rot.y)) + p.z * Math.sin(dtr(rot.y)),
-            y: p.y,
-            z: -p.x * Math.sin(dtr(rot.y)) + p.z * Math.cos(dtr(rot.y))
-          };
-        },
-        z: function(p, rot) {
-          return {
-            x: p.x * Math.cos(dtr(rot.z)) - p.y * Math.sin(dtr(rot.z)),
-            y: p.x * Math.sin(dtr(rot.z)) + p.y * Math.cos(dtr(rot.z)),
-            z: p.z
-          };
-        }
-      },
-      pos: function(p, pos) {
-        return {
-          x: p.x + pos.x,
-          y: p.y + pos.y,
-          z: p.z + pos.z
-        };
-      }
-    },
-    pov: {
-      plane: function(p) {
-        return {
-          x: p.x * cam.ang.cplane + p.z * cam.ang.splane,
-          y: p.y,
-          z: p.x * -cam.ang.splane + p.z * cam.ang.cplane
-        };
-      },
-      theta: function(p) {
-        return {
-          x: p.x,
-          y: p.y * cam.ang.ctheta - p.z * cam.ang.stheta,
-          z: p.y * cam.ang.stheta + p.z * cam.ang.ctheta
-        };
-      },
-      set: function(p) {
-        return {
-          x: p.x - cam.obj.x,
-          y: p.y - cam.obj.y,
-          z: p.z - cam.obj.z
-        };
-      }
-    },
-    persp: function(p) {
-      return {
-        x: p.x * cam.dist.z / p.z * cam.zoom,
-        y: p.y * cam.dist.z / p.z * cam.zoom,
-        z: p.z * cam.zoom,
-        p: cam.dist.z / p.z
-      };
-    },
-    disp: function(p, disp) {
-      return {
-        x: p.x + disp.x,
-        y: -p.y + disp.y,
-        z: p.z + disp.z,
-        p: p.p
-      };
-    },
-    steps: function(_obj_, sz, rot, pos, disp) {
-      var _args = trans.parts.sz(_obj_, sz);
-      _args = trans.parts.rot.x(_args, rot);
-      _args = trans.parts.rot.y(_args, rot);
-      _args = trans.parts.rot.z(_args, rot);
-      _args = trans.parts.pos(_args, pos);
-      _args = trans.pov.plane(_args);
-      _args = trans.pov.theta(_args);
-      _args = trans.pov.set(_args);
-      _args = trans.persp(_args);
-      _args = trans.disp(_args, disp);
-      return _args;
-    }
-  };
-
-  (function() {
-    "use strict";
-    var threeD = function(param) {
-      this.transIn = {};
-      this.transOut = {};
-      this.transIn.vtx = (param.vtx);
-      this.transIn.sz = (param.sz);
-      this.transIn.rot = (param.rot);
-      this.transIn.pos = (param.pos);
-    };
-
-    threeD.prototype.vupd = function() {
-      this.transOut = trans.steps(
-
-        this.transIn.vtx,
-        this.transIn.sz,
-        this.transIn.rot,
-        this.transIn.pos,
-        cam.disp
-      );
-    };
-
-    var Build = function() {
-      this.vel = 0.04;
-      this.lim = 360;
-      this.diff = 200;
-      this.initPos = 100;
-      this.toX = _x;
-      this.toY = _y;
-      this.go();
-    };
-
-    Build.prototype.go = function() {
-      this.canvas = document.getElementById("canv");
-      this.canvas.width = window.innerWidth;
-      this.canvas.height = window.innerHeight;
-      this.$ = canv.getContext("2d");
-      this.$.globalCompositeOperation = 'source-over';
-      this.varr = [];
-      this.dist = [];
-      this.calc = [];
-
-      for (var i = 0, len = num; i < len; i++) {
-        this.add();
-      }
-
-      this.rotObj = {
-        x: 0,
-        y: 0,
-        z: 0
-      };
-      this.objSz = {
-        x: w / 5,
-        y: h / 5,
-        z: w / 5
-      };
-    };
-
-    Build.prototype.add = function() {
-      this.varr.push(new threeD({
-        vtx: {
-          x: rnd(),
-          y: rnd(),
-          z: rnd()
-        },
-        sz: {
-          x: 0,
-          y: 0,
-          z: 0
-        },
-        rot: {
-          x: 20,
-          y: -20,
-          z: 0
-        },
-        pos: {
-          x: this.diff * Math.sin(360 * Math.random() * Math.PI / 180),
-          y: this.diff * Math.sin(360 * Math.random() * Math.PI / 180),
-          z: this.diff * Math.sin(360 * Math.random() * Math.PI / 180)
-        }
-      }));
-      this.calc.push({
-        x: 360 * Math.random(),
-        y: 360 * Math.random(),
-        z: 360 * Math.random()
-      });
-    };
-
-    Build.prototype.upd = function() {
-      cam.obj.x += (this.toX - cam.obj.x) * 0.05;
-      cam.obj.y += (this.toY - cam.obj.y) * 0.05;
-    };
-
-    Build.prototype.draw = function() {
-      this.$.clearRect(0, 0, this.canvas.width, this.canvas.height);
-      cam.upd();
-      this.rotObj.x += 0.1;
-      this.rotObj.y += 0.1;
-      this.rotObj.z += 0.1;
-
-      for (var i = 0; i < this.varr.length; i++) {
-        for (var val in this.calc[i]) {
-          if (this.calc[i].hasOwnProperty(val)) {
-            this.calc[i][val] += this.vel;
-            if (this.calc[i][val] > this.lim) this.calc[i][val] = 0;
-          }
-        }
-
-        this.varr[i].transIn.pos = {
-          x: this.diff * Math.cos(this.calc[i].x * Math.PI / 180),
-          y: this.diff * Math.sin(this.calc[i].y * Math.PI / 180),
-          z: this.diff * Math.sin(this.calc[i].z * Math.PI / 180)
-        };
-        this.varr[i].transIn.rot = this.rotObj;
-        this.varr[i].transIn.sz = this.objSz;
-        this.varr[i].vupd();
-        if (this.varr[i].transOut.p < 0) continue;
-        var g = this.$.createRadialGradient(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p, this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p * 2);
-        this.$.globalCompositeOperation = 'lighter';
-        g.addColorStop(0, 'hsla(255, 255%, 255%, 1)');
-        g.addColorStop(.5, 'hsla(' + (i + 2) + ',85%, 40%,1)');
-        g.addColorStop(1, 'hsla(' + (i) + ',85%, 40%,.5)');
-        this.$.fillStyle = g;
-        this.$.beginPath();
-        this.$.arc(this.varr[i].transOut.x, this.varr[i].transOut.y, this.varr[i].transOut.p * 2, 0, Math.PI * 2, false);
-        this.$.fill();
-        this.$.closePath();
-      }
-    };
-    Build.prototype.anim = function() {
-      window.requestAnimationFrame = (function() {
-        return window.requestAnimationFrame ||
-          function(callback, element) {
-            window.setTimeout(callback, 1000 / 60);
-          };
-      })();
-      var anim = function() {
-        this.upd();
-        this.draw();
-        window.requestAnimationFrame(anim);
-      }.bind(this);
-      window.requestAnimationFrame(anim);
-    };
-
-    Build.prototype.run = function() {
-      this.anim();
-      
-    };
-    var app = new Build();
-    app.run();
-  })();
-  window.addEventListener('resize', function() {
-    canvas.width = w = window.innerWidth;
-    canvas.height = h = window.innerHeight;
-  }, false);
-</script>
-
-<style  type="text/css">
-  body{
-    background-color: rgba(26,26,26,1);
-    text-align: -webkit-auto;
-    color: white;
-  }
-  body div,body p,body ul,body li,div p,p{
-    color: white;
-    filter:alpha(Opacity=90);
-    -moz-opacity:0.9;
-    opacity: 0.9; 
-  }
-  body hr{
-    background-color: rgba(255,255,255,0.4);
-    height: 1px;
-    border: none;
-  }
-  #cnblogs_post_body p img{
-    max-width: 100%;
-  }
-  #container {
-    width: 90%;
-    position: relative;
-    background-color: rgba(0, 0, 0, 0);
-  }
-  #canv{
-    position: fixed;
-  }
-  .cnblogs_code {
-    color: #f8f8f8;
-    background-color: rgba(245, 245, 245, 0);
-    border: 1px solid #cccccc6e;
-  }
-  .cnblogs_code span{
-    color: #ccc!important;
-    background-color: #f5f5f500!important;
-  }
-  .cnblogs_code div {
-    background-color: rgba(0, 0, 0, 0);
-  }
-  .cnblogs_code_toolbar a:link{
-    background-color: #f5f5f500!important;
-  }
-  .cnblogs_code_toolbar a:link img{
-    background-color:#f5f5f500!important;
-  }
-  div.commentform textarea.comment_textarea {
-    background-color: #f0f8ff00;
-  }
-</style>
-    
     <!-- background effects end -->
 
 	<!-- Modified by Yu-Hsuan Yen -->
@@ -451,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.5)), url('../../../../img/yc.jpeg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/yc.jpeg')
                 /*post*/
             
         
@@ -486,8 +125,8 @@
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">0</span> and
-                                Reading Time <span class="post-count">1</span> Minutes
+                                Words <span class="post-count">817</span> and
+                                Reading Time <span class="post-count">3</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -505,6 +144,11 @@
         </div>      
     </div>
 
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
     
 </header>
 
@@ -612,7 +256,107 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                
+                <h3 id="BUAA-OS-Lab0"><a href="#BUAA-OS-Lab0" class="headerlink" title="BUAA_OS_Lab0"></a>BUAA_OS_Lab0</h3><h4 id="一、实验思考题"><a href="#一、实验思考题" class="headerlink" title="一、实验思考题"></a>一、实验思考题</h4><h5 id="Thinking-0-1"><a href="#Thinking-0-1" class="headerlink" title="Thinking 0.1"></a>Thinking 0.1</h5><ul>
+<li><p>执行cat Untracked.txt后的结果：README.txt文件位于untracked区</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/cat_Untracked.png" alt="cat_untracked"></p>
+</li>
+<li><p>执行cat Stage.txt后的结果：README.txt文件位于staged区</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/cat_stage.png"></p>
+</li>
+<li><p>修改修改README.txt 文件，再执行命令git status &gt; Modified.txt。执行命令cat Modified.txt后的结果：</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/modified.png"></p>
+</li>
+</ul>
+<p>结果和第一次执行 add 命令之前的 status 不一样。第一次执行 add 命令之前的README.txt的 status是未跟踪，修改后的status是未暂存以备提交的变更</p>
+<p>原因是执行add命令前README.txt未被跟踪，后续执行add命令文件被跟踪修改后未提交，所以处于未暂存状态。</p>
+<h5 id="Thinking-0-2"><a href="#Thinking-0-2" class="headerlink" title="Thinking 0.2"></a>Thinking 0.2</h5><blockquote>
+<p>Thinking0.2 仔细看看0.10，思考一下箭头中的add thefile、stage thefile和 commit分别对应的是Git里的哪些命令呢？</p>
+</blockquote>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/status.png"></p>
+<p>add the file 对应指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add</span><br></pre></td></tr></table></figure>
+
+<p>stage the file 对应指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git add</span><br></pre></td></tr></table></figure>
+
+<p>commit 对应指令:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
+
+<h5 id="Thinking-0-3"><a href="#Thinking-0-3" class="headerlink" title="Thinking 0.3"></a>Thinking 0.3</h5><p><img src="/2024/03/11/BUAA-OS-Lab0/git_structure.png"></p>
+<blockquote>
+<ol>
+<li>代码文件print.c 被错误删除时，应当使用什么命令将其恢复？</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -- print.c</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol start="2">
+<li>代码文件 print.c 被错误删除后，执行了 git rm print.c 命令，此时应当 使用什么命令将其恢复？</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout HEAD print.c</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<ol start="3">
+<li>无关文件 hello.txt 已经被添加到暂存区时，如何在不删除此文件的前提下将其移出暂存区？</li>
+</ol>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset HEAD hello.txt</span><br></pre></td></tr></table></figure>
+
+<h5 id="Thinking-0-4"><a href="#Thinking-0-4" class="headerlink" title="Thinking 0.4"></a>Thinking 0.4</h5><ul>
+<li><p>在文件里加入Testing 1，git add，git commit，提交说明记为1。模仿上述做法，把1分别改为2和3，再提交两次。<img src="/2024/03/11/BUAA-OS-Lab0/4_add.png"></p>
+</li>
+<li><p>使用git log命令查看提交日志，看是否已经有三次提交，记下提交说明为3的哈希值。</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/log_1.png"></p>
+</li>
+<li><p>进行版本回退。执行命令git reset –hard HEAD^后，再执行git log，观 察其变化。</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/log_2.png"></p>
+</li>
+<li><p>找到提交说明为1的哈希值，执行命令git reset –hard后，再执 行git log，观察其变化。</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/log_3.png"></p>
+</li>
+<li><p>现在已经回到了旧版本，为了再次回到新版本，执行git reset –hard ，再执行git log，观察其变化。</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/log_4.png"></p>
+</li>
+</ul>
+<h5 id="Thinking-0-5"><a href="#Thinking-0-5" class="headerlink" title="Thinking 0.5"></a>Thinking 0.5</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo first</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/11/BUAA-OS-Lab0/echo_1.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo second &gt; output.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/11/BUAA-OS-Lab0/echo_2.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo third &gt; output.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/11/BUAA-OS-Lab0/echo_3.png"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo forth &gt;&gt; output.txt</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2024/03/11/BUAA-OS-Lab0/echo_4.png"></p>
+<h5 id="Thinking-0-6"><a href="#Thinking-0-6" class="headerlink" title="Thinking 0.6"></a>Thinking 0.6</h5><p>command文件内容：</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/command.png"></p>
+<p>result文件内容：</p>
+<p><img src="/2024/03/11/BUAA-OS-Lab0/result.png"></p>
+<p>test文件命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">echo ...</span><br></pre></td></tr></table></figure>
+
+<p>将…中的内容输出到result中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">a&#x3D;1</span><br><span class="line">b&#x3D;2</span><br><span class="line">c&#x3D;$[$a+$b]</span><br></pre></td></tr></table></figure>
+
+<p>将a赋值为1，b赋值为2，c赋值为3</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">echo $c&gt;file1</span><br><span class="line">echo $b&gt;file2</span><br><span class="line">echo $a&gt;file3</span><br></pre></td></tr></table></figure>
+
+<p>将a输出到为file3，c输出到为file1，b输出到为file2</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cat file1&gt;file4</span><br><span class="line">cat file2&gt;&gt;file4</span><br><span class="line">cat file3&gt;&gt;file4</span><br><span class="line">cat file4&gt;&gt;result</span><br></pre></td></tr></table></figure>
+
+<p>将file1 file2 file3的值依次输出到file4中，再将file4的值输出到result尾部。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo echo Shell Start</span><br><span class="line">echo &#39;echo Shell Start&#39;</span><br></pre></td></tr></table></figure>
+
+<p>效果无区别</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo echo $c&gt;file1</span><br><span class="line">echo ’echo $c&gt;file1‘</span><br></pre></td></tr></table></figure>
+
+<p>效果有区别，上面的输出结果为echo，下面输出结果为echo $c&gt;file1</p>
+<h4 id="二、实验难点分析"><a href="#二、实验难点分析" class="headerlink" title="二、实验难点分析"></a>二、实验难点分析</h4><h4 id="三、实验体会"><a href="#三、实验体会" class="headerlink" title="三、实验体会"></a>三、实验体会</h4><p>由于上机前没有仔细看教程，导致对Linux一些指令用法的不熟悉、对Makefile和bash脚本写法不熟悉。这也导致了我在上机时写的很慢。在仔细阅读教程后，终于对自己犯的一些错误恍然大悟，对git、Linux命令、bash脚本编写和Makefile编写有了进一步的认识。总体而言，本次实验难度不大，主要是考察我们对基础知识的理解。</p>
+
                 
                 <hr>
                 <!-- Pager -->
@@ -731,6 +475,17 @@
             <!-- Table of Contents -->
 
     
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OS-Lab0"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA_OS_Lab0</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#一、实验思考题"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、实验思考题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-0-1"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Thinking 0.1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-0-2"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">Thinking 0.2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-0-3"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">Thinking 0.3</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-0-4"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">Thinking 0.4</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-0-5"><span class="toc-nav-number">1.1.5.</span> <span class="toc-nav-text">Thinking 0.5</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-0-6"><span class="toc-nav-number">1.1.6.</span> <span class="toc-nav-text">Thinking 0.6</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#二、实验难点分析"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、实验难点分析</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#三、实验体会"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三、实验体会</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
       
     
 
@@ -979,6 +734,8 @@
     
 
     <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
     
 <script type="text/x-mathjax-config">
     MathJax.Hub.Config({
