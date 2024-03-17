@@ -4,6 +4,25 @@
   
     
     <entry>
+      <title>DeepLearning</title>
+      <link href="/2024/03/17/DeepLearning/"/>
+      <url>/2024/03/17/DeepLearning/</url>
+      
+        <content type="html"><![CDATA[<h3 id="DeepLearning"><a href="#DeepLearning" class="headerlink" title="DeepLearning"></a>DeepLearning</h3><h4 id="Logistic-Regression"><a href="#Logistic-Regression" class="headerlink" title="Logistic Regression"></a>Logistic Regression</h4><h5 id="Basic-function"><a href="#Basic-function" class="headerlink" title="Basic function:"></a>Basic function:</h5><p>$$<br>w,x \in R^{n_x},x&#x3D; \begin{pmatrix} x_1\ x_2\ x_3\ …\x_{n_x}\end{pmatrix}, b \in R\ \hat y&#x3D;\sigma(w^Tx+b),\hat y \in (0,1)\\sigma(z)&#x3D;\frac{1}{1+e^{-z}} \<br>$$</p><h5 id="Loss-function"><a href="#Loss-function" class="headerlink" title="Loss function:"></a>Loss function:</h5><p>$$<br>L(\hat y, y)&#x3D;-[ y\log \hat y +( 1-y ) \log (1-\hat y)]<br>$$</p><h5 id="Cost-function"><a href="#Cost-function" class="headerlink" title="Cost function"></a>Cost function</h5><p>$$<br>J(w,b)&#x3D;\frac{1}{m}\sum _{i&#x3D;1}^{m}L(\hat y^{(i)}, y^{(i)})<br>$$</p>]]></content>
+      
+      
+      
+        <tags>
+            
+            <tag> DeepLearning </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>BUAA-OO-hw3</title>
       <link href="/2024/03/17/BUAA-OO-hw3/"/>
       <url>/2024/03/17/BUAA-OO-hw3/</url>
