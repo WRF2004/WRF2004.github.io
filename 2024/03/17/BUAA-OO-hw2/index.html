@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          BUAA_OO_hw1 - Hexo-theme-snail
+          BUAA-OO-hw2 - Hexo-theme-snail
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/2024/03/11/BUAA-OO-hw1/">
+    <link rel="canonical" href="https://dusign.net/2024/03/17/BUAA-OO-hw2/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/sea.jpg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/default.jpg')
                 /*post*/
             
         
@@ -115,17 +115,17 @@
                               <a class="tag" href="/tags/#OO" title="OO">OO</a>
                             
                         </div>
-                        <h1>BUAA_OO_hw1</h1>
+                        <h1>BUAA-OO-hw2</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by WRF on
-                            2024-03-11
+                            2024-03-17
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">441</span> and
+                                Words <span class="post-count">405</span> and
                                 Reading Time <span class="post-count">1</span> Minutes
                             </span>
                             <div class="blank_box"></div>
@@ -256,23 +256,30 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="BUAA-OO-hw1"><a href="#BUAA-OO-hw1" class="headerlink" title="BUAA_OO_hw1"></a>BUAA_OO_hw1</h3><p>架构图如下：</p>
-<p><img src="hw_1.png" alt=""></p>
-<h4 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h4><p>创建Processor类对输入的表达式进行预处理，去除空格、合并符号、将乘方拆分为多个x相乘的形式(例如：<em>x^3</em>  → x <em> x </em> x)</p>
-<h4 id="expr包设计"><a href="#expr包设计" class="headerlink" title="expr包设计"></a>expr包设计</h4><p><img src="expr.png" alt=""></p>
-<h5 id="Factor"><a href="#Factor" class="headerlink" title="Factor"></a>Factor</h5><p>本次作业因子分为两种: Number和Varible。为了方便后续的表达式运算，我根据因子计算的性质在其中设计了一个Hashmap来存储其指数和系数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Number &#123;</span><br><span class="line">    </span><br><span class="line">    private HashMap&lt;Integer, BigInteger&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">    </span><br><span class="line">    public HashMap&lt;Integer, BigInteger&gt; getMap() &#123;</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Var &#123;</span><br><span class="line"></span><br><span class="line">    private final HashMap&lt;Integer, BigInteger&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public HashMap&lt;Integer, BigInteger&gt; getMap() &#123;</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="Term"><a href="#Term" class="headerlink" title="Term"></a>Term</h5><p>Term由Factor相乘得到，因此也使用Hashmap存储其指数和系数，同时为了乘法计算，使用mergeFactor()方法对Factor的乘法运算进行处理。</p>
-<p>形式:</p>
+                <h3 id="BUAA-OO-hw2"><a href="#BUAA-OO-hw2" class="headerlink" title="BUAA-OO-hw2"></a>BUAA-OO-hw2</h3><p>架构图如下:</p>
+<p><img src="hw_2.png" alt=""></p>
+<h4 id="任务清单"><a href="#任务清单" class="headerlink" title="任务清单"></a>任务清单</h4><p>增加了exp()因子，新增自定义函数因子。</p>
+<h4 id="重构"><a href="#重构" class="headerlink" title="重构"></a>重构</h4><p>本次作业并不适用于第一次作业的架构，故选择重构。此次重构增加Unit类和Poly类，以替代Hashmap来进行表达式的计算和简化。</p>
+<h5 id="Unit类"><a href="#Unit类" class="headerlink" title="Unit类:"></a>Unit类:</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class Unit &#123;</span><br><span class="line">    private BigInteger coe;</span><br><span class="line">    private final BigInteger exp;</span><br><span class="line">    private final Poly expRatio;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数学公式表示:</p>
 <script type="math/tex; mode=display">
-a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>Expr</h5><p>Expr由Term相加得到，也使用Hashmap存储每个Term的指数和系数，增加mergeTerm()方法对Term的加法进行处理。</p>
-<p>形式:</p>
+a*x^b*exp((\sum_{i=1}^na_i*x_i^b*exp))</script><p>coe为系数，exp为varible的指数，expRatio为exp()因子的表达式因子的Poly形式。</p>
+<h5 id="Poly类"><a href="#Poly类" class="headerlink" title="Poly类:"></a>Poly类:</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">public class Poly &#123;</span><br><span class="line">    private ArrayList&lt;Unit&gt; units;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数学公式表示:</p>
 <script type="math/tex; mode=display">
-\sum_{i=1}^na_i*x_i^b</script><h4 id="递归下降"><a href="#递归下降" class="headerlink" title="递归下降"></a>递归下降</h4><p>按照训练给出的架构来做就好了：</p>
-<h5 id="Lexer"><a href="#Lexer" class="headerlink" title="Lexer"></a>Lexer</h5><p>将processor处理后的表达式输入到Lexer中，Lexer通过next()方法解析表达式，再通过peek()方法将解析出的”词”传入Parser中。</p>
-<h5 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h5><p>对Lexer传出的curToken在进行分析，运用parseExpr()方法获得Expr、parseTerm()获得Term、parseFactor()获得Factor。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>由于本次作业表达式形式相对简单，所以我也采用了Hashmap这种简单的方法进行处理。好处就是加减乘除计算处理非常简单，不需要递归。坏处就是可拓展性极差，只适用于第一次作业这种特定形式的表达式，因此在后续迭代中需要进行重构。</p>
+\sum_{i=1}^nUnit_i</script><p>用ArrayList存储各个unit，最后用toString()方法输出最终表达式。</p>
+<h4 id="自定义函数处理"><a href="#自定义函数处理" class="headerlink" title="自定义函数处理"></a>自定义函数处理</h4><p>专门新建一个FunctAnalysis类用于对函数表达式的处理和转换。处理主要是提取出函数名和表达式，转换是将待处理的带函数的表达式转换为无函数表达式。</p>
+<h5 id="FunctAnalysis"><a href="#FunctAnalysis" class="headerlink" title="FunctAnalysis"></a>FunctAnalysis</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class FuncAnalysis &#123;</span><br><span class="line">    private static HashMap&lt;String, String&gt; funcMap &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">    private static HashMap&lt;String, ArrayList&lt;String&gt;&gt; parametric &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>funcMap: 用于对函数名和函数表达式的映射。</li>
+<li>parametric: 用于函数名对于函数的未知变量的映射。</li>
+</ul>
+<h5 id="FuncFactor"><a href="#FuncFactor" class="headerlink" title="FuncFactor"></a>FuncFactor</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">public class FuncFactor implements Factor &#123;</span><br><span class="line">    private final String result;</span><br><span class="line">    private final Expr expr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>result: 经过FunctAnalysis转换后的表达式字符串。</li>
+<li>expr: 将result转换为Expr类的形式。</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>本次作业对上次作业进行重构，构建了可拓展性更好的架构。缺点在于没有对表达式进行化简，在后续迭代中需要进一步补充。</p>
 
                 
                 <hr>
@@ -280,12 +287,12 @@ a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2024/03/15/BUAA-OS-Lab1/" data-toggle="tooltip" data-placement="top" title="BUAA-OS-Lab1">&larr; Previous Post</a>
+                        <a href="/2024/03/17/BUAA-OO-hw3/" data-toggle="tooltip" data-placement="top" title="BUAA-OO-hw3">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2024/03/11/BUAA-OS-Lab0/" data-toggle="tooltip" data-placement="top" title="BUAA_OS_Lab0">Next Post &rarr;</a>
+                        <a href="/2024/03/15/BUAA-OS-Lab1/" data-toggle="tooltip" data-placement="top" title="BUAA-OS-Lab1">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -398,7 +405,7 @@ a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OO-hw1"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA_OO_hw1</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#预处理"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">预处理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#expr包设计"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">expr包设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Factor"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">Factor</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Term"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">Term</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Expr"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Expr</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#递归下降"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">递归下降</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Lexer"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Lexer</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Parser"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">Parser</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OO-hw2"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA-OO-hw2</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#任务清单"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">任务清单</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#重构"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">重构</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Unit类"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">Unit类:</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Poly类"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">Poly类:</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#自定义函数处理"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">自定义函数处理</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#FunctAnalysis"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">FunctAnalysis</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#FuncFactor"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">FuncFactor</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol>
             
           
           </div>

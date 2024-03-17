@@ -243,9 +243,130 @@
 
     
 
+    
+
+    
+
+    
+
 
 
 <!-- Main Content -->
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2024/03/17/BUAA-OO-hw3/">
+                <h2 class="post-title">
+                    BUAA-OO-hw3
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    BUAA-OO-hw3架构图如下:
+
+任务清单
+自定义函数嵌套
+求导
+简化
+
+求导本次迭代增加了求导因子，需要对表达式进行求导运算。解决方案是添加DerivativeFactor，并在Poly中增加deprivePoly()方法，实现加减法连接的式子的求导。在Unit中增加deriveUnit()，实现乘法连接的式子的求导。
+
+DerivativeFactor:
+数学表达式表示:$$dx(E......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by WRF on
+                    2024-03-17
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#OO" title="OO">OO</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2024/03/17/BUAA-OO-hw2/">
+                <h2 class="post-title">
+                    BUAA-OO-hw2
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    BUAA-OO-hw2架构图如下:
+
+任务清单增加了exp()因子，新增自定义函数因子。
+重构本次作业并不适用于第一次作业的架构，故选择重构。此次重构增加Unit类和Poly类，以替代Hashmap来进行表达式的计算和简化。
+Unit类:12345public class Unit &#123;    private BigInteger coe;    private final BigI......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by WRF on
+                    2024-03-17
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#OO" title="OO">OO</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
+
+    
+
+        <div class="post-preview">
+
+            <a href="/2024/03/15/BUAA-OS-Lab1/">
+                <h2 class="post-title">
+                    BUAA-OS-Lab1
+                </h2>
+                <h3 class="post-subtitle">
+                    
+                </h3>
+                <div class="post-content-preview">
+                    BUAA_OS_Lab1一、实验思考题Thinking 1.1
+请阅读 附录中的编译链接详解，尝试分别使用实验环境中的原生x86 工具 链（gcc、ld、readelf、objdump 等）和 MIPS 交叉编译工具链（带有 mips-linux-gnu-前缀），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。
+
+执行:
+1gcc -E hello.c
+......
+                </div>
+            </a>
+            
+                <p class="post-meta" style="margin: 10px 0;">
+                    Posted by WRF on
+                    2024-03-15
+                </p>
+                <div class="tags">
+                    
+                      <a href="/tags/#OS" title="OS">OS</a>
+                    
+                </div>
+            
+
+        </div>
+        <hr>
+
+    
 
     
 
@@ -259,7 +380,12 @@
                     
                 </h3>
                 <div class="post-content-preview">
-                    ...
+                    BUAA_OO_hw1架构图如下：
+
+预处理创建Processor类对输入的表达式进行预处理，去除空格、合并符号、将乘方拆分为多个x相乘的形式(例如：x^3  → x  x  x)
+expr包设计
+Factor本次作业因子分为两种: Number和Varible。为了方便后续的表达式运算，我根据因子计算的性质在其中设计了一个Hashmap来存储其指数和系数。
+12345678public c......
                 </div>
             </a>
             
@@ -401,11 +527,11 @@
     <div class="tags">
         
             
-            <a href="/tags/#OO" title="OO" rel="1">OO</a>
+            <a href="/tags/#OO" title="OO" rel="3">OO</a>
             
         
             
-            <a href="/tags/#OS" title="OS" rel="1">OS</a>
+            <a href="/tags/#OS" title="OS" rel="2">OS</a>
             
         
     </div>
@@ -477,15 +603,23 @@
     <ul>
       
         <li>
+          <a href="/2024/03/17/BUAA-OO-hw3/">BUAA-OO-hw3</a>
+        </li>
+      
+        <li>
+          <a href="/2024/03/17/BUAA-OO-hw2/">BUAA-OO-hw2</a>
+        </li>
+      
+        <li>
+          <a href="/2024/03/15/BUAA-OS-Lab1/">BUAA-OS-Lab1</a>
+        </li>
+      
+        <li>
           <a href="/2024/03/11/BUAA-OO-hw1/">BUAA_OO_hw1</a>
         </li>
       
         <li>
           <a href="/2024/03/11/BUAA-OS-Lab0/">BUAA_OS_Lab0</a>
-        </li>
-      
-        <li>
-          <a href="/2024/03/11/Hello-world/">Hello world</a>
         </li>
       
     </ul>
@@ -510,7 +644,7 @@
         
     <h5>ARCHIVES</h5>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">3</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/03/">March 2024</a><span class="archive-list-count">6</span></li></ul>
     </div>
 
         <hr>

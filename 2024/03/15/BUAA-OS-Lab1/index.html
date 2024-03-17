@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          BUAA_OO_hw1 - Hexo-theme-snail
+          BUAA-OS-Lab1 - Hexo-theme-snail
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/2024/03/11/BUAA-OO-hw1/">
+    <link rel="canonical" href="https://dusign.net/2024/03/15/BUAA-OS-Lab1/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -90,7 +90,7 @@
     header.intro-header{
         
             
-                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/sea.jpg')
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/wx.jpeg')
                 /*post*/
             
         
@@ -112,21 +112,21 @@
                     <div class="post-heading">
                         <div class="tags">
                             
-                              <a class="tag" href="/tags/#OO" title="OO">OO</a>
+                              <a class="tag" href="/tags/#OS" title="OS">OS</a>
                             
                         </div>
-                        <h1>BUAA_OO_hw1</h1>
+                        <h1>BUAA-OS-Lab1</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by WRF on
-                            2024-03-11
+                            2024-03-15
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">441</span> and
-                                Reading Time <span class="post-count">1</span> Minutes
+                                Words <span class="post-count">995</span> and
+                                Reading Time <span class="post-count">3</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -256,23 +256,51 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="BUAA-OO-hw1"><a href="#BUAA-OO-hw1" class="headerlink" title="BUAA_OO_hw1"></a>BUAA_OO_hw1</h3><p>架构图如下：</p>
-<p><img src="hw_1.png" alt=""></p>
-<h4 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h4><p>创建Processor类对输入的表达式进行预处理，去除空格、合并符号、将乘方拆分为多个x相乘的形式(例如：<em>x^3</em>  → x <em> x </em> x)</p>
-<h4 id="expr包设计"><a href="#expr包设计" class="headerlink" title="expr包设计"></a>expr包设计</h4><p><img src="expr.png" alt=""></p>
-<h5 id="Factor"><a href="#Factor" class="headerlink" title="Factor"></a>Factor</h5><p>本次作业因子分为两种: Number和Varible。为了方便后续的表达式运算，我根据因子计算的性质在其中设计了一个Hashmap来存储其指数和系数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Number &#123;</span><br><span class="line">    </span><br><span class="line">    private HashMap&lt;Integer, BigInteger&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line">    </span><br><span class="line">    public HashMap&lt;Integer, BigInteger&gt; getMap() &#123;</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">public class Var &#123;</span><br><span class="line"></span><br><span class="line">    private final HashMap&lt;Integer, BigInteger&gt; map &#x3D; new HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    public HashMap&lt;Integer, BigInteger&gt; getMap() &#123;</span><br><span class="line">        return map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="Term"><a href="#Term" class="headerlink" title="Term"></a>Term</h5><p>Term由Factor相乘得到，因此也使用Hashmap存储其指数和系数，同时为了乘法计算，使用mergeFactor()方法对Factor的乘法运算进行处理。</p>
-<p>形式:</p>
-<script type="math/tex; mode=display">
-a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>Expr</h5><p>Expr由Term相加得到，也使用Hashmap存储每个Term的指数和系数，增加mergeTerm()方法对Term的加法进行处理。</p>
-<p>形式:</p>
-<script type="math/tex; mode=display">
-\sum_{i=1}^na_i*x_i^b</script><h4 id="递归下降"><a href="#递归下降" class="headerlink" title="递归下降"></a>递归下降</h4><p>按照训练给出的架构来做就好了：</p>
-<h5 id="Lexer"><a href="#Lexer" class="headerlink" title="Lexer"></a>Lexer</h5><p>将processor处理后的表达式输入到Lexer中，Lexer通过next()方法解析表达式，再通过peek()方法将解析出的”词”传入Parser中。</p>
-<h5 id="Parser"><a href="#Parser" class="headerlink" title="Parser"></a>Parser</h5><p>对Lexer传出的curToken在进行分析，运用parseExpr()方法获得Expr、parseTerm()获得Term、parseFactor()获得Factor。</p>
-<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>由于本次作业表达式形式相对简单，所以我也采用了Hashmap这种简单的方法进行处理。好处就是加减乘除计算处理非常简单，不需要递归。坏处就是可拓展性极差，只适用于第一次作业这种特定形式的表达式，因此在后续迭代中需要进行重构。</p>
+                <h3 id="BUAA-OS-Lab1"><a href="#BUAA-OS-Lab1" class="headerlink" title="BUAA_OS_Lab1"></a>BUAA_OS_Lab1</h3><h4 id="一、实验思考题"><a href="#一、实验思考题" class="headerlink" title="一、实验思考题"></a>一、实验思考题</h4><h5 id="Thinking-1-1"><a href="#Thinking-1-1" class="headerlink" title="Thinking 1.1"></a>Thinking 1.1</h5><blockquote>
+<p>请阅读 附录中的编译链接详解，尝试分别使用实验环境中的原生x86 工具 链（gcc、ld、readelf、objdump 等）和 MIPS 交叉编译工具链（带有 mips-linux-gnu-前缀），重复其中的编译和解析过程，观察相应的结果，并解释其中向objdump传入的参数的含义。</p>
+</blockquote>
+<p>执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c</span><br></pre></td></tr></table></figure>
+<p>得到结果：C语言的预处理器将头文件的内容添加到了源文件中</p>
+<p><img src="gcc_E.png" alt=""></p>
+<p>执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -c hello.c</span><br></pre></td></tr></table></figure>
+<p>得到hello.o文件，在对hello.o文件进行反汇编，导入到obj文件中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objdump -DS hello.o &gt; obj</span><br></pre></td></tr></table></figure>
+<p>obj中main函数部分代码如下所示:</p>
+<p><img src="obj_main.png" alt=""></p>
+<p>执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gcc -o hello hello.c</span><br><span class="line">objdump -DS hello &gt; obj_hello</span><br></pre></td></tr></table></figure>
+<p>obj_hello部分结果如图:</p>
+<p><img src="obj_hello.png" alt=""></p>
+<p>objdump传入的第一个参数为需要反编译的文件名, 第二个参数为反编译结果输入到的文件。</p>
+<h5 id="Thinking-1-2"><a href="#Thinking-1-2" class="headerlink" title="Thinking 1.2"></a>Thinking 1.2</h5><blockquote>
+<p>尝试使用我们编写的readelf程序，解析之前在target目录下生成的内核ELF文件。</p>
+<p>也许你会发现我们编写的readelf程序是不能解析readelf文件本身的，而我们刚 才介绍的系统工具readelf则可以解析，这是为什么呢？（提示：尝试使用readelf-h，并阅读tools/readelf目录下的Makefile，观察readelf与hello的不同）</p>
+</blockquote>
+<p>解析结果:</p>
+<p><img src="readelf_hello.png" alt=""></p>
+<p>执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -h hello</span><br></pre></td></tr></table></figure>
+<p>结果如图:</p>
+<p><img src="readelf_hello1.png" alt=""></p>
+<p>执行:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">readelf -h .&#x2F;readelf</span><br></pre></td></tr></table></figure>
+<p>结果如图:</p>
+<p><img src="readelf_readelf.png" alt=""></p>
+<p>由上可知：hello的文件类型是EXEC(可执行文件)，而readelf的文件类型是DYN(地址独立的可执行文件)，readelf程序本身只能解析可执行文件，所以解析不了readelf文件本身，而系统工具readelf可以解析所有可执行文件，所以可以解析./readelf。</p>
+<h5 id="Thinking-1-3"><a href="#Thinking-1-3" class="headerlink" title="Thinking 1.3"></a>Thinking 1.3</h5><blockquote>
+<p>在理论课上我们了解到，MIPS体系结构上电时，启动入口地址为0xBFC00000 （其实启动入口地址是根据具体型号而定的，由硬件逻辑确定，也有可能不是这个地址，但 一定是一个确定的地址），但实验操作系统的内核入口并没有放在上电启动地址，而是按照内存布局图放置。思考为什么这样放置内核还能保证内核入口被正确跳转到？ （提示：思考实验中启动过程的两阶段分别由谁执行。）</p>
+</blockquote>
+<p>因为引导加载程序在初始化虚拟内存系统时，会将内核映像加载到虚拟地址空间的某个位置，并设置相应的页表条目。这样，CPU就可以通过虚拟地址访问内核，之后会执行一个跳转指令，将控制权交给内核的入口点。</p>
+<h4 id="二、实验难点"><a href="#二、实验难点" class="headerlink" title="二、实验难点"></a>二、实验难点</h4><h5 id="readelf-c文件编写"><a href="#readelf-c文件编写" class="headerlink" title="readelf.c文件编写"></a>readelf.c文件编写</h5><p>需要通过教程中的结构体数据类型和变量定义，查表得到节头表的地址、节头数量和大小。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sh_table &#x3D; (const void *)((char *)binary + ehdr-&gt;e_shoff);</span><br><span class="line">sh_entry_count &#x3D; ehdr-&gt;e_shnum;</span><br><span class="line">sh_entry_size &#x3D; ehdr-&gt;e_shentsize;</span><br></pre></td></tr></table></figure>
+<p>要获得每个节头的地址需要用节头表指针加上index与节头大小的乘积。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shdr &#x3D; (Elf32_Shdr *)((char *)sh_table + (i * sh_entry_size));</span><br></pre></td></tr></table></figure>
+<h5 id="补全kernel-lds文件"><a href="#补全kernel-lds文件" class="headerlink" title="补全kernel.lds文件"></a>补全kernel.lds文件</h5><p>根据教程格式写即可，注意内核的位置。</p>
+<h5 id="init-start-S文件补全"><a href="#init-start-S文件补全" class="headerlink" title="init/start.S文件补全"></a>init/start.S文件补全</h5><p>将栈指针指向kernelbase，跳转到mips_init函数即可。</p>
+<h5 id="完成vprintfmt-函数"><a href="#完成vprintfmt-函数" class="headerlink" title="完成vprintfmt()函数"></a>完成vprintfmt()函数</h5><p>由于vprintfmt()函数的实现方法有很多种，所以在完成这一部分时可以不按照教程代码注释的指引来写。需要注意的是循环的break条件，遇见’\0’需要跳出循环，不然会陷入死循环。还需要注意实现解析各个符号的含义，按照教程来即可。</p>
+<h4 id="三、实验体会"><a href="#三、实验体会" class="headerlink" title="三、实验体会"></a>三、实验体会</h4><p>本次实验总体而言难度不大，但由于教程写的比较难懂，所以需要多耗费一些时间在教程的阅读和理解上面。同时也需要注意一些细节，容易在细节上出错。</p>
 
                 
                 <hr>
@@ -280,12 +308,12 @@ a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>
                 <ul class="pager">
                     
                     <li class="previous">
-                        <a href="/2024/03/15/BUAA-OS-Lab1/" data-toggle="tooltip" data-placement="top" title="BUAA-OS-Lab1">&larr; Previous Post</a>
+                        <a href="/2024/03/17/BUAA-OO-hw2/" data-toggle="tooltip" data-placement="top" title="BUAA-OO-hw2">&larr; Previous Post</a>
                     </li>
                     
                     
                     <li class="next">
-                        <a href="/2024/03/11/BUAA-OS-Lab0/" data-toggle="tooltip" data-placement="top" title="BUAA_OS_Lab0">Next Post &rarr;</a>
+                        <a href="/2024/03/11/BUAA-OO-hw1/" data-toggle="tooltip" data-placement="top" title="BUAA_OO_hw1">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -398,7 +426,7 @@ a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OO-hw1"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA_OO_hw1</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#预处理"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">预处理</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#expr包设计"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">expr包设计</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Factor"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">Factor</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Term"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">Term</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Expr"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">Expr</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#递归下降"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">递归下降</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Lexer"><span class="toc-nav-number">1.3.1.</span> <span class="toc-nav-text">Lexer</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Parser"><span class="toc-nav-number">1.3.2.</span> <span class="toc-nav-text">Parser</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#总结"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">总结</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OS-Lab1"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA_OS_Lab1</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#一、实验思考题"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、实验思考题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-1-1"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Thinking 1.1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-1-2"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">Thinking 1.2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-1-3"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">Thinking 1.3</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#二、实验难点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、实验难点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#readelf-c文件编写"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">readelf.c文件编写</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#补全kernel-lds文件"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">补全kernel.lds文件</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#init-start-S文件补全"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">init&#x2F;start.S文件补全</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#完成vprintfmt-函数"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">完成vprintfmt()函数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#三、实验体会"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三、实验体会</span></a></li></ol></li></ol>
             
           
           </div>
@@ -420,7 +448,7 @@ a*x^b</script><h5 id="Expr"><a href="#Expr" class="headerlink" title="Expr"></a>
                     <h5><a href="/tags/">FEATURED TAGS</a></h5>
                     <div class="tags">
                        
-                          <a class="tag" href="/tags/#OO" title="OO">OO</a>
+                          <a class="tag" href="/tags/#OS" title="OS">OS</a>
                         
                     </div>
                 </section>
