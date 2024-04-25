@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="google-site-verification" content="xBT4GhYoi5qRD5tr338pgPM5OWHHIDR6mNg1a3euekI" />
+    <meta name="baidu-site-verification" content="093lY4ziMu" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="description" content="A hexo theme">
+    <meta name="keyword"  content="dusign, hexo-theme-snail">
+    <link rel="shortcut icon" href="/img/ironman-draw.png">
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
+    <title>
+        
+          LLM_Learning - Hexo-theme-snail
+        
+    </title>
+
+    <link rel="canonical" href="https://dusign.net/2024/04/25/LLM-Learning/">
+
+    <!-- Bootstrap Core CSS -->
+    
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+
+
+    <!-- Custom CSS --> 
+    
+        
+<link rel="stylesheet" href="/css/dusign-light.css">
+
+        
+<link rel="stylesheet" href="/css/dusign-common-light.css">
+
+        
+<link rel="stylesheet" href="/css/font-awesome.css">
+
+        
+<link rel="stylesheet" href="/css/toc.css">
+
+        <!-- background effects end -->
+    
+    
+    <!-- Pygments Highlight CSS -->
+    
+<link rel="stylesheet" href="/css/highlight.css">
+
+
+    
+<link rel="stylesheet" href="/css/widget.css">
+
+
+    
+<link rel="stylesheet" href="/css/rocket.css">
+
+
+    
+<link rel="stylesheet" href="/css/signature.css">
+
+
+    
+<link rel="stylesheet" href="/css/fonts.googleapis.css">
+
+
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+    <!-- photography -->
+    
+<link rel="stylesheet" href="/css/photography.css">
+
+
+    <!-- ga & ba script hoook -->
+    <script></script>
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="">
+
+    <!-- background effects start -->
+    
+    <!-- background effects end -->
+
+	<!-- Modified by Yu-Hsuan Yen -->
+<!-- Post Header -->
+<style type="text/css">
+    header.intro-header{
+        
+            
+                background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url('../../../../img/default.jpg')
+                /*post*/
+            
+        
+    }
+    
+    #signature{
+        background-image: url('/null');
+    }
+    
+</style>
+
+<header class="intro-header" >
+    <!-- Signature -->
+    <div id="signature">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                
+                    <div class="post-heading">
+                        <div class="tags">
+                            
+                              <a class="tag" href="/tags/#LLML" title="LLML">LLML</a>
+                            
+                        </div>
+                        <h1>LLM_Learning</h1>
+                        <h2 class="subheading"></h2>
+                        <span class="meta">
+                            Posted by WRF on
+                            2024-04-25
+                        </span>
+
+                        
+                            <div class="blank_box"></div>
+                            <span class="meta">
+                                Words <span class="post-count">4.5k</span> and
+                                Reading Time <span class="post-count">15</span> Minutes
+                            </span>
+                            <div class="blank_box"></div>
+                            <!-- 不蒜子统计 start -->
+                            <span class="meta">
+                                Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+                            </span>
+                            <!-- 不蒜子统计 end -->
+                        
+
+                    </div>
+                
+
+                </div>
+            </div>
+        </div>      
+    </div>
+
+    
+    <div class="waveWrapper">
+        <div class="wave wave_before" style="background-image: url('/img/wave-light.png')"></div>
+        <div class="wave wave_after" style="background-image: url('/img/wave-light.png')"></div>
+    </div>
+    
+</header>
+
+	
+    <!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">WRF&#39;s Blog</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+
+                    
+
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/about/">About me</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/archive/">Archives</a>
+                        </li>
+                        
+                    
+
+                        
+                        <li>
+                            <a href="/tags/">Tags</a>
+                        </li>
+                        
+                    
+                    
+                    
+                </ul>
+            </div>
+        </div>
+        <!-- /.navbar-collapse -->
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+
+    <!-- Main Content -->
+    <!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+
+            <!-- Post Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                post-container">
+
+                <h3 id="大模型"><a href="#大模型" class="headerlink" title="大模型"></a>大模型</h3><h4 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h4><p><strong>大模型是指具有大规模参数和复杂计算结构的机器学习模型。</strong>这些模型通常由<strong>深度神经网络</strong>构建而成，拥有数十亿甚至数千亿个参数。大模型的设计目的是为了提高模型的表达能力和预测性能，能够处理更加复杂的任务和数据。大模型在各种领域都有广泛的应用，包括自然语言处理、计算机视觉、语音识别和推荐系统等。大模型通过训练海量数据来学习复杂的模式和特征，具有更强大的泛化能力，可以对未见过的数据做出准确的预测。</p>
+<p><strong>大模型与小模型的区别</strong>: 当模型的训练数据和参数不断扩大，直到达到一定的临界规模后，其表现出了一些未能预测的、更复杂的能力和特性，模型能够从原始训练数据中自动学习并发现新的、更高层次的特征和模式，这种能力被称为<strong>涌现能力</strong>。而具备涌现能力的机器学习模型就被认为是独立意义上的大模型，这也是其和小模型最大意义上的区别。</p>
+<h4 id="大模型相关概念区分"><a href="#大模型相关概念区分" class="headerlink" title="大模型相关概念区分"></a>大模型相关概念区分</h4><ul>
+<li><strong>大模型（Large Model,也称基础模型，即 Foundation Model），</strong>是指具有大量参数和复杂结构的机器学习模型，能够处理海量数据、完成各种复杂的任务，如自然语言处理、计算机视觉、语音识别等。</li>
+<li><strong>超大模型：</strong>大模型是超大模型的一个子集，它们的参数量远超过大模型。</li>
+<li><strong>大语言模型(Large Language Model):</strong> 通常是具有大规模参数和计算能力的自然语言处理模型，例如 OpenAI 的 GPT-3 模型。这些模型可以通过大量的数据和参数进行训练，以<strong>生成人类类似的文本或回答自然语言的问题</strong>。大型语言模型在自然语言处理、文本生成和智能对话等领域有广泛应用。</li>
+<li><strong>GPT（Generative Pre-trained Transformer）：</strong>GPT 和 ChatGPT 都是基于 Transformer 架构的语言模型，但它们在设计和应用上存在区别：GPT 模型旨在生成自然语言文本并处理各种自然语言处理任务，如文本生成、翻译、摘要等。它通常在单向生成的情况下使用，即根据给定的文本生成连贯的输出。</li>
+<li><strong>ChatGPT：</strong>ChatGPT 则专注于对话和交互式对话。它经过特定的训练，以更好地处理多轮对话和上下文理解。ChatGPT 设计用于提供流畅、连贯和有趣的对话体验，以响应用户的输入并生成合适的回复。</li>
+</ul>
+<h4 id="大模型的发展历程"><a href="#大模型的发展历程" class="headerlink" title="大模型的发展历程"></a>大模型的发展历程</h4><p><strong>萌芽期（1950-2005）：以 CNN 为代表的传统神经网络模型阶段</strong></p>
+<ul>
+<li>1956 年，从计算机专家约翰·麦卡锡提出“人工智能”概念开始，AI 发展由最开始基于小规模专家知识逐步发展为基于机器学习。</li>
+<li>1980 年，卷积神经网络的雏形 CNN 诞生。</li>
+<li>1998 年，现代卷积神经网络的基本结构 LeNet-5 诞生，机器学习方法由早期基于浅层机器学习的模型，变为了基于深度学习的模型,为自然语言生成、计算机视觉等领域的深入研究奠定了基础，对后续深度学习框架的迭代及大模型发展具有开创性的意义。</li>
+</ul>
+<p><strong>探索沉淀期（2006-2019）：以 Transformer 为代表的全新神经网络模型阶段</strong></p>
+<ul>
+<li>2013 年，自然语言处理模型 Word2Vec 诞生，首次提出将单词转换为向量的“词向量模型”，以便计算机更好地理解和处理文本数据。</li>
+<li>2014 年，被誉为 21 世纪最强大算法模型之一的 GAN（对抗式生成网络）诞生，标志着深度学习进入了生成模型研究的新阶段。</li>
+<li>2017 年，Google 颠覆性地提出了基于自注意力机制的神经网络结构——Transformer 架构，奠定了大模型预训练算法架构的基础。</li>
+<li>2018 年，OpenAI 和 Google 分别发布了 GPT-1 与 BERT 大模型，意味着预训练大模型成为自然语言处理领域的主流。在探索期，以 Transformer 为代表的全新神经网络架构，奠定了大模型的算法架构基础，使大模型技术的性能得到了显著提升。</li>
+</ul>
+<p><strong>迅猛发展期（2020-至今）：以 GPT 为代表的预训练大模型阶段</strong></p>
+<ul>
+<li>2020 年，OpenAI 公司推出了GPT-3，模型参数规模达到了 1750 亿，成为当时最大的语言模型，并且在零样本学习任务上实现了巨大性能提升。随后，更多策略如基于人类反馈的强化学习（RHLF）、代码预训练、指令微调等开始出现, 被用于进一步提高推理能力和任务泛化。</li>
+<li>2022 年 11 月，搭载了GPT3.5的 ChatGPT横空出世，凭借逼真的自然语言交互与多场景内容生成能力，迅速引爆互联网。</li>
+<li>2023 年 3 月，最新发布的超大规模多模态预训练大模型——GPT-4，具备了多模态理解与多类型内容生成能力。在迅猛发展期，大数据、大算力和大算法完美结合，大幅提升了大模型的预训练和生成能力以及多模态多场景应用能力。如 ChatGPT 的巨大成功,就是在微软Azure强大的算力以及 wiki 等海量数据支持下，在 Transformer 架构基础上，坚持 GPT 模型及人类反馈的强化学习（RLHF）进行精调的策略下取得的。</li>
+</ul>
+<h4 id="大模型的特点"><a href="#大模型的特点" class="headerlink" title="大模型的特点"></a>大模型的特点</h4><ul>
+<li>巨大的规模: 大模型包含数十亿个参数，模型大小可以达到数百 GB 甚至更大。巨大的模型规模使大模型具有强大的表达能力和学习能力。</li>
+<li>涌现能力：涌现（英语：emergence）或称创发、突现、呈展、演生，是一种现象，为许多小实体相互作用后产生了大实体，而这个大实体展现了组成它的小实体所不具有的特性。引申到模型层面，涌现能力指的是当模型的训练数据突破一定规模，模型突然涌现出之前小模型所没有的、意料之外的、能够综合分析和解决更深层次问题的复杂能力和特性，展现出类似人类的思维和智能。涌现能力也是大模型最显著的特点之一。</li>
+<li>更好的性能和泛化能力： 大模型通常具有更强大的学习能力和泛化能力，能够在各种任务上表现出色，包括自然语言处理、图像识别、语音识别等。</li>
+<li>多任务学习: 大模型通常会一起学习多种不同的 NLP 任务,如机器翻译、文本摘要、问答系统等。这可以使模型学习到更广泛和泛化的语言理解能力。</li>
+<li>大数据训练: 大模型需要海量的数据来训练,通常在 TB 以上甚至 PB 级别的数据集。只有大量的数据才能发挥大模型的参数规模优势。</li>
+<li>强大的计算资源: 训练大模型通常需要数百甚至上千个 GPU,以及大量的时间,通常在几周到几个月。</li>
+<li>迁移学习和预训练： 大模型可以通过在大规模数据上进行预训练，然后在特定任务上进行微调，从而提高模型在新任务上的性能。</li>
+<li>自监督学习： 大模型可以通过自监督学习在大规模未标记数据上进行训练，从而减少对标记数据的依赖，提高模型的效能。</li>
+</ul>
+<h4 id="大模型的分类"><a href="#大模型的分类" class="headerlink" title="大模型的分类"></a>大模型的分类</h4><p>按照<strong>输入数据类型</strong>的不同，大模型主要可以分为以下三大类：</p>
+<ul>
+<li>语言大模型（NLP）：是指在自然语言处理（Natural Language Processing，NLP）领域中的一类大模型，通常用于处理文本数据和理解自然语言。这类大模型的主要特点是它们在大规模语料库上进行了训练，以学习自然语言的各种语法、语义和语境规则。例如：GPT 系列（OpenAI）、Bard（Google）、文心一言（百度）。</li>
+<li>视觉大模型（CV）：是指在计算机视觉（Computer Vision，CV）领域中使用的大模型，通常用于图像处理和分析。这类模型通过在大规模图像数据上进行训练，可以实现各种视觉任务，如图像分类、目标检测、图像分割、姿态估计、人脸识别等。例如：VIT 系列（Google）、文心UFO、华为盘古 CV、INTERN（商汤）。</li>
+<li>多模态大模型：是指能够处理多种不同类型数据的大模型，例如文本、图像、音频等多模态数据。这类模型结合了 NLP 和 CV 的能力，以实现对多模态信息的综合理解和分析，从而能够更全面地理解和处理复杂的数据。例如：DingoDB 多模向量数据库（九章云极 DataCanvas）、DALL-E(OpenAI)、悟空画画（华为）、midjourney。</li>
+</ul>
+<p>按照<strong>应用领域</strong>的不同，大模型主要可以分为 L0、L1、L2 三个层级：</p>
+<ul>
+<li>通用大模型 L0：是指可以在多个领域和任务上通用的大模型。它们利用大算力、使用海量的开放数据与具有巨量参数的深度学习算法，在大规模无标注数据上进行训练，以寻找特征并发现规律，进而形成可“举一反三”的强大泛化能力，可在不进行微调或少量微调的情况下完成多场景任务，相当于 AI 完成了“通识教育”。</li>
+<li>行业大模型 L1：是指那些针对特定行业或领域的大模型。它们通常使用行业相关的数据进行预训练或微调，以提高在该领域的性能和准确度，相当于 AI 成为“行业专家”。</li>
+<li>垂直大模型 L2：是指那些针对特定任务或场景的大模型。它们通常使用任务相关的数据进行预训练或微调，以提高在该任务上的性能和效果。</li>
+</ul>
+<h4 id="大模型的泛化与微调"><a href="#大模型的泛化与微调" class="headerlink" title="大模型的泛化与微调"></a>大模型的泛化与微调</h4><p><strong>模型的泛化能力</strong>：是指一个模型在面对新的、未见过的数据时，能够正确理解和预测这些数据的能力。在机器学习和人工智能领域，模型的泛化能力是评估模型性能的重要指标之一。</p>
+<p>什么是<strong>模型微调</strong>：给定预训练模型（Pre-trained model），基于模型进行微调（Fine Tune）。相对于从头开始训练(Training a model from scatch)，微调可以省去大量计算资源和计算时间，提高计算效率,甚至提高准确率。</p>
+<p><strong>模型微调的基本思想是使用少量带标签的数据对预训练模型进行再次训练，以适应特定任务。</strong>在这个过程中，模型的参数会根据新的数据分布进行调整。这种方法的好处在于，它利用了预训练模型的强大能力，同时还能够适应新的数据分布。因此，模型微调能够提高模型的泛化能力，减少过拟合现象。</p>
+<p><strong>常见的模型微调方法：</strong></p>
+<ul>
+<li>Fine-tuning：这是最常用的微调方法。通过在预训练模型的最后一层添加一个新的分类层，然后根据新的数据集进行微调。</li>
+<li>Feature augmentation：这种方法通过向数据中添加一些人工特征来增强模型的性能。这些特征可以是手工设计的，也可以是通过自动特征生成技术生成的。</li>
+<li>Transfer learning：这种方法是使用在一个任务上训练过的模型作为新任务的起点，然后对模型的参数进行微调，以适应新的任务。</li>
+</ul>
+<h4 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h4><p>Transformer是一种基于自注意力机制（Self-Attention Mechanism）的深度学习模型架构，最初是为了解决自然语言处理（NLP）任务中的序列到序列（Sequence-to-Sequence）学习问题而提出的。它由谷歌的研究人员在2017年的论文“Attention is All You Need”中首次介绍，并在之后的许多NLP任务中取得了显著的效果。</p>
+<p>Transformer主要由两部分组成：编码器（Encoder）和解码器（Decoder）。每个编码器和解码器都包含多个堆叠的相同层。</p>
+<p><strong>编码器</strong>：</p>
+<ul>
+<li>编码器主要由自注意力层和前馈神经网络层组成。</li>
+<li>自注意力层允许模型在处理序列中的每个位置时，都考虑到序列中的其他所有位置。这通过计算输入序列中每个位置的表示（通常称为“token embeddings”）之间的点积得分，并应用softmax函数得到注意力权重来实现。</li>
+<li>前馈神经网络层则对每个位置的注意力加权表示进行进一步处理。</li>
+</ul>
+<p><strong>解码器</strong>：</p>
+<ul>
+<li>解码器也有自注意力层和前馈神经网络层，但与编码器不同的是，解码器还有一个额外的编码器-解码器注意力层。</li>
+<li>编码器-解码器注意力层允许解码器在生成输出序列时，关注编码器的输出。这使得模型能够考虑到整个输入序列的信息来预测下一个输出。</li>
+</ul>
+<p>Transformer还采用了位置编码（Positional Encoding）机制，以弥补模型本身无法处理序列顺序信息的缺陷。位置编码通常是通过正弦和余弦函数计算得到的，并加到输入嵌入中。</p>
+<p>由于Transformer的并行计算能力（不依赖RNN的逐序处理）以及自注意力机制带来的强大表示能力，它成为了许多NLP任务中的首选模型架构，特别是在机器翻译、文本摘要、问答系统等领域取得了显著成果。此外，Transformer的思想也被扩展到了其他领域，如计算机视觉等。</p>
+<h4 id="Decoder-only的自回归解码"><a href="#Decoder-only的自回归解码" class="headerlink" title="Decoder-only的自回归解码"></a>Decoder-only的自回归解码</h4><p>Decoder-Only的自回归解码是Transformer模型中的一种特定结构和方法。在这种结构中，解码器（Decoder）部分被独立出来，用于生成目标序列，而不需要使用编码器（Encoder）来处理输入序列。这种模型架构的设计使得Decoder-Only在处理生成式任务时具有一定的优势。</p>
+<p>自回归性质是Decoder-Only技术的一个核心特点。在生成输出序列时，每个位置的预测都依赖于之前位置的预测结果。具体来说，解码器只能看到已生成的部分序列，而不能看到未生成部分的信息。这种因果关系的设计使得Decoder-Only技术在生成式任务中能够更好地捕捉上下文信息，并生成具有逻辑和语法结构的输出。</p>
+<p>这种自回归解码的过程逐步进行，使得模型能够灵活地应对长度不固定的输入序列。在每个步骤中，解码器根据已经生成的序列部分和可能的上下文信息来预测下一个词或符号。这种逐步生成的方式使得Decoder-Only模型在翻译、摘要生成、问答系统等多个领域取得了令人瞩目的成果。</p>
+<p>值得注意的是，尽管Decoder-Only模型在生成式任务中表现出色，但它并不适用于所有类型的任务。对于需要同时考虑输入和输出信息的任务，完整的Transformer编码器-解码器结构可能更为合适。因此，在选择使用Decoder-Only模型时，需要根据具体任务的需求和特性进行权衡。</p>
+<h3 id="量化"><a href="#量化" class="headerlink" title="量化"></a>量化</h3><h4 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h4><p><strong>在大模型领域中，量化是一种重要的技术。主要用于减少模型的存储空间和计算量，同时保持模型的性能。</strong></p>
+<p>具体来说，<strong>量化是指将预训练模型中的权重从浮点数转换成低位数的技术，通常情况下，量化的精度是8位或更低。</strong></p>
+<h4 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h4><p>量化可以分为不同的类型，例如<strong>对称量化</strong>和<strong>非对称量化</strong>。</p>
+<p>在对称量化中，浮点值的零点直接映射到量化值的零点，与量化相关的参数只有缩放因子s。而非对称量化可能需要更多的参数来调整零点的映射位置。</p>
+<p>此外，根据量化的粒度，还可以分为通道量化、逐组量化、逐层量化和组合量化。通道量化、逐组量化和逐层量化分别以单一通道、组、层为单位计算对应float变量范围进行量化，而组合量化则是对多个神经网络结构进行融合后进行量化。</p>
+<p>在大模型领域中，量化技术通常与训练过程相结合，形成量化感知训练（Quantization Aware Training, QAT）和量化感知微调（Quantization-Aware Fine-tuning, QAF）。这些方法旨在在模型压缩和保持性能之间取得平衡，使模型在量化后仍能保持良好的性能。</p>
+<p>总的来说，大模型领域的量化是一种重要的优化技术，有助于减少模型的存储和计算成本，同时保持模型的性能，使得大型语言模型更易于部署和应用。</p>
+
+                
+                <hr>
+                <!-- Pager -->
+                <ul class="pager">
+                    
+                    
+                    <li class="next">
+                        <a href="/2024/04/22/BUAA-OS-Lab4/" data-toggle="tooltip" data-placement="top" title="BUAA-OS-Lab4">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                <!-- tip start -->
+                
+
+                
+                <div class="comment_notes">
+                    <p>
+                        
+                    </p>
+                </div>
+                
+                <!-- tip end -->
+
+                <!-- Music start-->
+                
+                
+<link rel="stylesheet" href="/css/music-player/fonts/iconfont.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/reset.css">
+
+
+<link rel="stylesheet" href="/css/music-player/css/player.css">
+
+
+<div class="music-player">
+    <audio class="music-player__audio" ></audio>
+    <div class="music-player__main">
+        <div class="music-player__blur"></div>
+        <div class="music-player__disc">
+            <div class="music-player__image">
+                <img width="100%" src="" alt="">
+            </div>
+            <div class="music-player__pointer"><img width="100%" src="/img/cd_tou.png" alt=""></div>
+        </div>
+        <div class="music-player__controls">
+            <div class="music__info">
+                <h3 class="music__info--title">...</h3>
+                <p class="music__info--singer">...</p>
+            </div>
+            <div class="player-control">
+                <div class="player-control__content">
+                    <div class="player-control__btns">
+                        <div class="player-control__btn player-control__btn--prev"><i class="iconfont icon-prev"></i></div>
+                        <div class="player-control__btn player-control__btn--play"><i class="iconfont icon-play"></i></div>
+                        <div class="player-control__btn player-control__btn--next"><i class="iconfont icon-next"></i></div>
+                        <div class="player-control__btn player-control__btn--mode"><i class="iconfont icon-loop"></i></div>
+                    </div>
+                    <div class="player-control__volume">
+                        <div class="control__volume--icon player-control__btn"><i class="iconfont icon-volume"></i></div>
+                        <div class="control__volume--progress player_progress"></div>
+                    </div>
+                </div>
+                <div class="player-control__content">
+                    <div class="player__song--progress player_progress"></div>
+                    <div class="player__song--timeProgess nowTime">00:00</div>
+                    <div class="player__song--timeProgess totalTime">00:00</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/music-player/utill.js"></script>
+
+
+<script src="/js/music-player/jquery.min.js"></script>
+
+<!-- netease; qqkg -->
+<!--
+<script src="/js/music-player/player.js?library=config.music.library.js"></script>
+-->
+<script src="../../../../js/music-player/player.js?library=netease&music=https://kg.qq.com/node/play?s=7deFpz7Z26Jmv7di&g_f=share_html"></script>
+                
+                <!-- Music end -->
+
+                <!-- Sharing -->
+                
+                <div class="social-share"  data-wechat-qrcode-helper="" align="center"></div>
+                <!--  css & js -->
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+                
+                <!-- Sharing -->
+
+                <!-- gitment start -->
+                
+                <!-- gitment end -->
+
+                <!-- 来必力City版安装代码 -->
+                
+                <!-- City版安装代码已完成 -->
+
+                <!-- disqus comment start -->
+                
+                <!-- disqus comment end -->
+            </div>
+            
+            <!-- Tabe of Content -->
+            <!-- Table of Contents -->
+
+    
+      
+        <aside id="sidebar">
+          <div id="toc" class="toc-article">
+          <strong class="toc-title">Contents</strong>
+          
+            
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#大模型"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">大模型</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#定义"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">定义</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#大模型相关概念区分"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">大模型相关概念区分</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#大模型的发展历程"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">大模型的发展历程</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#大模型的特点"><span class="toc-nav-number">1.4.</span> <span class="toc-nav-text">大模型的特点</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#大模型的分类"><span class="toc-nav-number">1.5.</span> <span class="toc-nav-text">大模型的分类</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#大模型的泛化与微调"><span class="toc-nav-number">1.6.</span> <span class="toc-nav-text">大模型的泛化与微调</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Transformer"><span class="toc-nav-number">1.7.</span> <span class="toc-nav-text">Transformer</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#Decoder-only的自回归解码"><span class="toc-nav-number">1.8.</span> <span class="toc-nav-text">Decoder-only的自回归解码</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#量化"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">量化</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#定义-1"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">定义</span></a></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#分类"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">分类</span></a></li></ol></li></ol>
+            
+          
+          </div>
+        </aside>
+      
+    
+
+                
+            <!-- Sidebar Container -->
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5><a href="/tags/">FEATURED TAGS</a></h5>
+                    <div class="tags">
+                       
+                          <a class="tag" href="/tags/#LLML" title="LLML">LLML</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <hr>
+                <h5>FRIENDS</h5>
+                <ul class="list-inline">
+
+                    
+                        <li><a href="https://wrf2004.github.io/" target="_blank">WRF&#39;s Blog</a></li>
+                    
+                        <li><a href="https://github.com/WRF2004" target="_blank">WRF&#39;s Github</a></li>
+                    
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+</article>
+
+
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script>
+    async("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js",function(){
+        anchors.options = {
+          visible: 'hover',
+          placement: 'left',
+          icon: 'ℬ'
+        };
+        anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+    })
+</script>
+
+
+<style  type="text/css">
+    /* place left on bigger screen */
+    @media all and (min-width: 800px) {
+        .anchorjs-link{
+            position: absolute;
+            left: -0.75em;
+            font-size: 1.1em;
+            margin-top : -0.1em;
+        }
+    }
+</style>
+
+
+
+    <!-- Footer -->
+    <!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <ul class="list-inline text-center">
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/WRF2004">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; WRF 2024 
+                    <br>
+                    Powered by 
+                    <a href="https://github.com/dusign/hexo-theme-snail" target="_blank" rel="noopener">
+                        <i>hexo-theme-snail</i>
+                    </a> | 
+                    <iframe name="star" style="margin-left: 2px; margin-bottom:-5px;" frameborder="0" scrolling="0"
+                        width="100px" height="20px"
+                        src="https://ghbtns.com/github-btn.html?user=dusign&repo=hexo-theme-snail&type=star&count=true">
+                    </iframe>
+                </p>
+            </div>
+        </div>
+    </div>
+
+</footer>
+
+<!-- jQuery -->
+
+<script src="/js/jquery.min.js"></script>
+
+
+<!-- Bootstrap Core JavaScript -->
+
+<script src="/js/bootstrap.min.js"></script>
+
+
+<!-- Custom Theme JavaScript -->
+
+<script src="/js/hux-blog.min.js"></script>
+
+
+<!-- Search -->
+
+<script src="/js/search.js"></script>
+
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("https://dusign.net/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+
+<!-- Google Analytics -->
+
+
+<script>
+    // dynamic User by Hux
+    var _gaId = 'UA-XXXXXXXX-X';
+    var _gaDomain = 'yoursite';
+
+    // Originial
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+    ga('create', _gaId, _gaDomain);
+    ga('send', 'pageview');
+</script>
+
+
+
+
+<!-- Baidu Tongji -->
+
+
+<!-- Search -->
+
+    <script type="text/javascript">      
+        var search_path = "search.xml";
+        if (search_path.length == 0) {
+            search_path = "search.xml";
+        }
+    var path = "/" + search_path;
+    searchFunc(path, 'local-search-input', 'local-search-result');
+    </script>
+
+
+<!-- busuanzi -->
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+	<a id="rocket" href="#top" class=""></a>
+	<script type="text/javascript" src="/js/totop.js?v=1.0.0" async=""></script>
+    <script type="text/javascript" src="/js/toc.js?v=1.0.0" async=""></script>
+
+    
+        <!-- background effects line -->
+        
+
+        
+            <script type="text/javascript" src="/js/mouse-click.js" content='[&quot;🌱&quot;,&quot;just do it&quot;,&quot;🍀&quot;]' color='[&quot;rgb(121,93,179)&quot; ,&quot;rgb(76,180,231)&quot; ,&quot;rgb(184,90,154)&quot;]'></script>
+        
+
+        <!-- background effects end -->
+    
+
+    <!--<script size="50" alpha='0.3' zIndex="-999" src="/js/ribbonStatic.js"></script>-->
+    
+        <script src="/js/ribbonDynamic.js"></script>
+    
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.6/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+</body>
+
+</html>
