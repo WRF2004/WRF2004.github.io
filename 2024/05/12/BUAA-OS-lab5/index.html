@@ -16,11 +16,11 @@
     <!--<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>-->
     <title>
         
-          BUAA-OS-Lab4 - Hexo-theme-snail
+          BUAA-OS-lab5 - Hexo-theme-snail
         
     </title>
 
-    <link rel="canonical" href="https://dusign.net/2024/04/22/BUAA-OS-Lab4/">
+    <link rel="canonical" href="https://dusign.net/2024/05/12/BUAA-OS-lab5/">
 
     <!-- Bootstrap Core CSS -->
     
@@ -115,18 +115,18 @@
                               <a class="tag" href="/tags/#OS" title="OS">OS</a>
                             
                         </div>
-                        <h1>BUAA-OS-Lab4</h1>
+                        <h1>BUAA-OS-lab5</h1>
                         <h2 class="subheading"></h2>
                         <span class="meta">
                             Posted by WRF on
-                            2024-04-22
+                            2024-05-12
                         </span>
 
                         
                             <div class="blank_box"></div>
                             <span class="meta">
-                                Words <span class="post-count">2.1k</span> and
-                                Reading Time <span class="post-count">7</span> Minutes
+                                Words <span class="post-count">1.8k</span> and
+                                Reading Time <span class="post-count">6</span> Minutes
                             </span>
                             <div class="blank_box"></div>
                             <!-- 不蒜子统计 start -->
@@ -256,104 +256,76 @@
                 col-md-10 col-md-offset-1
                 post-container">
 
-                <h3 id="BUAA-OS-Lab4"><a href="#BUAA-OS-Lab4" class="headerlink" title="BUAA-OS-Lab4"></a>BUAA-OS-Lab4</h3><h4 id="一、思考题"><a href="#一、思考题" class="headerlink" title="一、思考题"></a>一、思考题</h4><h5 id="Thinking-4-1"><a href="#Thinking-4-1" class="headerlink" title="Thinking 4.1"></a>Thinking 4.1</h5><blockquote>
-<p>思考并回答下面的问题： </p>
-<p>•内核在保存现场的时候是如何避免破坏通用寄存器的？</p>
-<p>•系统陷入内核调用后可以直接从当时的$a0-$a3参数寄存器中得到用户调用msyscall 留下的信息吗？ </p>
-<p>•我们是怎么做到让sys开头的函数“认为”我们提供了和用户调用msyscall时同样 的参数的？</p>
-<p>•内核处理系统调用的过程对Trapframe做了哪些更改？这种修改对应的用户态的变 化是什么？</p>
+                <h3 id="BUAA-OS-Lab5"><a href="#BUAA-OS-Lab5" class="headerlink" title="BUAA-OS-Lab5"></a>BUAA-OS-Lab5</h3><h4 id="一、思考题"><a href="#一、思考题" class="headerlink" title="一、思考题"></a>一、思考题</h4><h5 id="Thinking-5-1"><a href="#Thinking-5-1" class="headerlink" title="Thinking 5.1"></a>Thinking 5.1</h5><blockquote>
+<p> 如果通过 kseg0 读写设备，那么对于设备的写入会缓存到 Cache 中。这是 一种错误的行为，在实际编写代码的时候这么做会引发不可预知的问题。请思考：这么做 这会引发什么问题？对于不同种类的设备（如我们提到的串口设备和IDE磁盘）的操作会 有差异吗？可以从缓存的性质和缓存更新的策略来考虑。</p>
 </blockquote>
-<p>1、</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mfc0    k0, CP0_STATUS</span><br><span class="line">	sw      k0, TF_STATUS(sp)</span><br></pre></td></tr></table></figure>
-<p>先把通用寄存器的值复制到k0中，再将k0中的值存储到内核栈中。</p>
-<p>2、可以。</p>
-<p>3、将参数复制到内核现场寄存器和内核栈中。</p>
-<p>4、返回值存入$v0中，pc+4跳转到下一条指令。若是nop则pc不变。</p>
-<h5 id="Thinking-4-2"><a href="#Thinking-4-2" class="headerlink" title="Thinking 4.2"></a>Thinking 4.2</h5><blockquote>
-<p>思考 envid2env函数: 为什么 envid2env中需要判断 e-&gt;env_id != envid 的情况？如果没有这步判断会发生什么情况？</p>
+<p>缓存机制是为了提高效率而设计的，具体体现为数据发生改变时并不立即写入内存，而是在cache发生替换时才写入。可能会导致数据不一致，如果对设备的写操作被缓存，那么后续读操作可能会从缓存中读取旧数据，而不是设备上的最新数据。</p>
+<p>有差异，串口设备要求较高的实时性，如果写操作被缓存，可能导致数据发送延迟，影响系统正常运行；IDE磁盘数据即时性的要求不高，但错误的缓存行为可能导致文件系统损坏或数据丢失。</p>
+<h5 id="Thinking-5-2"><a href="#Thinking-5-2" class="headerlink" title="Thinking 5.2"></a>Thinking 5.2</h5><blockquote>
+<p>查找代码中的相关定义，试回答一个磁盘块中最多能存储多少个文件控制 块？一个目录下最多能有多少个文件？我们的文件系统支持的单个文件最大为多大？</p>
 </blockquote>
-<p>因为使用envid从envs中取出的进程的env_id可能与envid不同，如果没有这步判断会导致进程出错。</p>
-<h5 id="Thinking-4-3"><a href="#Thinking-4-3" class="headerlink" title="Thinking 4.3"></a>Thinking 4.3</h5><blockquote>
-<p> 思考下面的问题，并对这个问题谈谈你的理解：请回顾 kern/env.c 文件 中 mkenvid() 函数的实现，该函数不会返回 0，请结合系统调用和 IPC 部分的实现与 envid2env() 函数的行为进行解释。</p>
+<p>一个磁盘块中最多能存储16个文件控制块，一个目录最多有16384个文件，单个文件最大为4MB。</p>
+<h5 id="Thinking-5-3"><a href="#Thinking-5-3" class="headerlink" title="Thinking 5.3"></a>Thinking 5.3</h5><blockquote>
+<p>请思考，在满足磁盘块缓存的设计的前提下，我们实验使用的内核支持的最 大磁盘大小是多少？</p>
 </blockquote>
-<p>在mkenvid() 函数中i一开始为0，++i后使得其返回值不为0。</p>
-<h5 id="Thinking-4-4"><a href="#Thinking-4-4" class="headerlink" title="Thinking 4.4"></a>Thinking 4.4</h5><blockquote>
-<p>关于 fork 函数的两个返回值，下面说法正确的是：</p>
-<p> A、fork 在父进程中被调用两次，产生两个返回值 </p>
-<p>B、fork 在两个进程中分别被调用一次，产生两个不同的返回值 </p>
-<p>C、fork 只在父进程中被调用了一次，在两个进程中各产生一个返回值 D、fork 只在子进程中被调用了一次，在两个进程中各产生一个返回值</p>
+<p>1GB</p>
+<h5 id="Thinking-5-4"><a href="#Thinking-5-4" class="headerlink" title="Thinking 5.4"></a>Thinking 5.4</h5><blockquote>
+<p>在本实验中，fs&#x2F;serv.h、user&#x2F;include&#x2F;fs.h 等文件中出现了许多宏定义， 试列举你认为较为重要的宏定义，同时进行解释，并描述其主要应用之处。</p>
 </blockquote>
-<p>C</p>
-<h5 id="Thinking-4-5"><a href="#Thinking-4-5" class="headerlink" title="Thinking 4.5"></a>Thinking 4.5</h5><blockquote>
-<p>我们并不应该对所有的用户空间页都使用 duppage 进行映射。那么究竟哪 些用户空间页应该映射，哪些不应该呢？请结合 kern/env.c 中 env_init 函数进行的页 面映射、include/mmu.h 里的内存布局图以及本章的后续描述进行思考。</p>
+<blockquote>
+<p>#define SECT_SIZE 512  扇区大小512字节</p>
+<p>#define SECT2BLK (BLOCK_SIZE &#x2F; SECT_SIZE)  1 个磁盘块是 8 个扇区#define DISKMAP 0x10000000</p>
+<p>#define DISKMAX 0x40000000 缓冲区地址0x10000000-0x40000000</p>
+<p>#define BLOCK_SIZE PAGE_SIZE 一个磁盘块大小为4KB</p>
+<p>#define FILE_STRUCT_SIZE 256 文件控制块大小256字节</p>
+<p>#define FILE2BLK (BLOCK_SIZE &#x2F; sizeof(struct File)) 1个磁盘块有16个文件控制块</p>
+<p>#define MAXNAMELEN 128 最大文件名长度为128</p>
 </blockquote>
-<p>UCOW-UTEXT中的内存是被COW保护的所以不应该进行映射，0-UTEMP的内存为invalid memory ，不应该进行映射，UTEMP-UCOW的内存是暂时保护的内存，不需要映射。</p>
-<h5 id="Thinking-4-6"><a href="#Thinking-4-6" class="headerlink" title="Thinking 4.6"></a>Thinking 4.6</h5><blockquote>
-<p>在遍历地址空间存取页表项时你需要使用到 vpd和 vpt这两个指针，请参 考user/include/lib.h 中的相关定义，思考并回答这几个问题： </p>
-<p>• vpt 和 vpd 的作用是什么？怎样使用它们？ </p>
-<p>• 从实现的角度谈一下为什么进程能够通过这种方式来存取自身的页表？ </p>
-<p>• 它们是如何体现自映射设计的？ </p>
-<p>• 进程能够通过这种方式来修改自己的页表项吗？</p>
+<h5 id="Thinking-5-5"><a href="#Thinking-5-5" class="headerlink" title="Thinking 5.5"></a>Thinking 5.5</h5><blockquote>
+<p>在Lab4“系统调用与fork”的实验中我们实现了极为重要的fork函数。那 么fork前后的父子进程是否会共享文件描述符和定位指针呢？请在完成上述练习的基础上 编写一个程序进行验证。</p>
 </blockquote>
-<p>作用: 在用户态下通过访问进程自己的物理内存获取用户页的页目录项页表项的 perm，用于 duppage 根据不同的 perm 类型在父子进程间执行不同的物理页映射；</p>
-<p>使用：vpd是页目录首地址，以vpd为基地址，加上页目录项偏移数即可指向va对应页目录项; vpt是页表首地址，以vpt为基地址，加上页表项偏移数即可指向va对应的页表项。</p>
-<p>因为页目录映射和页表映射使得进程能够存取自身页表。</p>
-<p>vpd的地址在UVPT和UVPT + PDMAP之间，说明将页目录映射到了某一页表位置(即实现了自映射);</p>
-<p>不能。该部分区域对用户只读不写。</p>
-<h5 id="Thinking-4-7"><a href="#Thinking-4-7" class="headerlink" title="Thinking 4.7"></a>Thinking 4.7</h5><blockquote>
-<p>在 do_tlb_mod 函数中，你可能注意到了一个向异常处理栈复制 Trapframe 运行现场的过程，请思考并回答这几个问题： </p>
-<p>• 这里实现了一个支持类似于“异常重入”的机制，而在什么时候会出现这种“异常重 入”？ </p>
-<p>• 内核为什么需要将异常的现场 Trapframe复制到用户空间？</p>
+<p>会共享文件描述符和定位指针。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">int r, fdnum, n;</span><br><span class="line">char buf[200];</span><br><span class="line">fdnum &#x3D; open(&quot;&#x2F;newmotd&quot;, O_RDWR);</span><br><span class="line">if ((r &#x3D; fork()) &#x3D;&#x3D; 0) &#123;</span><br><span class="line">	n &#x3D; read(fdnum, buf, 5);</span><br><span class="line">	printk(&quot;[child] buffer is \&#39;%s\&#39;\n&quot;, buf);</span><br><span class="line">&#125; else &#123;</span><br><span class="line">	n &#x3D; read(fdnum, buf, 5);</span><br><span class="line">	printk(&quot;[father] buffer is \&#39;%s\&#39;\n&quot;, buf);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="Thinking-5-6"><a href="#Thinking-5-6" class="headerlink" title="Thinking 5.6"></a>Thinking 5.6</h5><blockquote>
+<p>请解释File, Fd, Filefd结构体及其各个域的作用。比如各个结构体会在哪些过程中被使用，是否对应磁盘上的物理实体还是单纯的内存数据等。说明形式自定，要求简洁明了，可大致勾勒出文件系统数据结构与物理实体的对应关系与设计框架。</p>
 </blockquote>
-<p>当出现COW异常时，需要使用用户态的系统调用，此时会出现这种异常重入；由于用户态把异常处理完毕后仍然在用户态恢复现场，所以此时要把内核保存的现场保存在用户空间的用户异常栈。</p>
-<h5 id="Thinking-4-8"><a href="#Thinking-4-8" class="headerlink" title="Thinking 4.8"></a>Thinking 4.8</h5><blockquote>
-<p> 在用户态处理页写入异常，相比于在内核态处理有什么优势？</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct Fd &#123; &#x2F;&#x2F; 文件描述符，该结构体用于管理文件描述符，存储相应数据</span><br><span class="line">	u_int fd_dev_id; &#x2F;&#x2F;  设备id</span><br><span class="line">	u_int fd_offset; &#x2F;&#x2F; 偏移量，类似于文件定位指针，标记随机读写的位置</span><br><span class="line">	u_int fd_omode; &#x2F;&#x2F; 用户对该文件的操作权限和方式</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">struct Filefd &#123; &#x2F;&#x2F; 已经打开的文件的文件描述符， 相较于Fd，有文件控制块f_file和fileid</span><br><span class="line">	struct Fd f_fd; &#x2F;&#x2F; 文件描述符，记录打开文件的部分信息</span><br><span class="line">	u_int f_fileid; &#x2F;&#x2F; 打开的文件的编号</span><br><span class="line">	struct File f_file; &#x2F;&#x2F; 文件控制块</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">struct File &#123; &#x2F;&#x2F; 文件控制块，包含文件的基本信息</span><br><span class="line">	char f_name[MAXNAMELEN]; &#x2F;&#x2F; filename文件名</span><br><span class="line">	uint32_t f_size;	 &#x2F;&#x2F; file size in bytes文件大小</span><br><span class="line">	uint32_t f_type;	 &#x2F;&#x2F; file type文件类型</span><br><span class="line">	uint32_t f_direct[NDIRECT]; &#x2F;&#x2F; 文件的直接指针，每个文件</span><br><span class="line">控制块设有10个直接指针，用来记录文件的数据块在磁盘上的位置。</span><br><span class="line">	uint32_t f_indirect; &#x2F;&#x2F; 指向一个间接磁盘块，用来存储指向文件内容的磁盘块的指针。</span><br><span class="line"></span><br><span class="line">	struct File *f_dir; &#x2F;&#x2F; the pointer to the dir where this file is in, valid only in memory. 指向这个文件所在目录的指针</span><br><span class="line">	char f_pad[FILE_STRUCT_SIZE - MAXNAMELEN - (3 + NDIRECT) * 4 - sizeof(void *)]; &#x2F;&#x2F; 为了让整数个文件结构体占用一个磁盘块，填充结构体中剩下的字节。</span><br><span class="line">&#125; __attribute__((aligned(4), packed));</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="Thinking-5-7"><a href="#Thinking-5-7" class="headerlink" title="Thinking 5.7"></a>Thinking 5.7</h5><blockquote>
+<p>图 5.9 中有多种不同形式的箭头，请解释这些不同箭头的差别，并思考我们的操作系统是如何实现对应类型的进程间通信的。</p>
 </blockquote>
-<p>释放内核，不需要内核执行大量工作；影响小，用户状态下不能得到一些在内核状态才有的权限，避免改变不必要的内存空间，内核态处理失误产生的影响较大，可能会使得操作系统崩溃。</p>
-<h5 id="Thinking-4-9"><a href="#Thinking-4-9" class="headerlink" title="Thinking 4.9"></a>Thinking 4.9</h5><blockquote>
-<p>请思考并回答以下几个问题： </p>
-<p>• 为什么需要将 syscall_set_tlb_mod_entry的调用放置在 syscall_exofork之前？ </p>
-<p>• 如果放置在写时复制保护机制完成之后会有怎样的效果？</p>
-</blockquote>
-<p>syscall_exofork()执行后，子进程和父进程各自执行，子进程需要改变entry.S中的env指针，会触发COW写入异常，中断处理机制需要syscall_set_tlb_mod_entry()执行，所以将 syscall_set_tlb_mod_entry 的调用放置在 syscall_exofork 之前；父进程在调用写时复制保护机制可能会引发缺页异常，而异常处理未设置好，则不能正常处理。</p>
-<h4 id="二、实验难点"><a href="#二、实验难点" class="headerlink" title="二、实验难点"></a>二、实验难点</h4><h5 id="do-syscall函数"><a href="#do-syscall函数" class="headerlink" title="do-syscall函数"></a>do-syscall函数</h5><p>do_syscall函数借助保存的Trapframe结构体获取用户态中传递过来的值，从而恢复用户态现场。</p>
-<p>首先需要从syscall_table中取得调用的函数:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func &#x3D; syscall_table[sysno];</span><br></pre></td></tr></table></figure>
-<p>再将tf指针中的保存的值存入参数中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">u_int arg1 &#x3D; tf-&gt;regs[5];</span><br><span class="line">u_int arg2 &#x3D; tf-&gt;regs[6];</span><br><span class="line">u_int arg3 &#x3D; tf-&gt;regs[7];</span><br><span class="line">arg4 &#x3D; *(u_int *)(tf-&gt;regs[29] + 16);  &#x2F;&#x2F; $sp + 16 bytes</span><br><span class="line">arg5 &#x3D; *(u_int *)(tf-&gt;regs[29] + 20);</span><br></pre></td></tr></table></figure>
-<p>最后调用func函数，同时将其返回值存入寄存器中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tf-&gt;regs[2] &#x3D; func(arg1, arg2, arg3, arg4, arg5);</span><br></pre></td></tr></table></figure>
-<h5 id="envid2env函数"><a href="#envid2env函数" class="headerlink" title="envid2env函数"></a>envid2env函数</h5><p>这个函数主要功能是将envid转换为env，我们首先需要判断是否为curenv：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">if (envid &#x3D;&#x3D; 0) &#123;</span><br><span class="line">		*penv &#x3D; curenv;</span><br><span class="line">		return 0;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>如果不是则从envs[]取出对应的env:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e &#x3D; &amp;envs[ENVX(envid)];</span><br></pre></td></tr></table></figure>
-<p>注意ENVX的功能是将envid转换为对应其在envs[]中的位置:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#define ENVX(envid) ((envid) &amp; (NENV - 1))</span><br></pre></td></tr></table></figure>
-<p>还需要判断checkperm:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">if (checkperm &amp;&amp; e-&gt;env_id !&#x3D; curenv-&gt;env_id &amp;&amp; e-&gt;env_parent_id !&#x3D; curenv-&gt;env_id) &#123;</span><br><span class="line">		return -E_BAD_ENV;</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h5 id="sys-exofork函数"><a href="#sys-exofork函数" class="headerlink" title="sys_exofork函数"></a>sys_exofork函数</h5><p>我们需要复制一份当前进程的运行现场（进程上下文）Trapframe到子进程的进程控制 块中：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">e-&gt;env_tf &#x3D; *((struct Trapframe *)KSTACKTOP - 1);</span><br></pre></td></tr></table></figure>
-<h5 id="duppage函数"><a href="#duppage函数" class="headerlink" title="duppage函数"></a>duppage函数</h5><p>我们要对不同权限位的页使用不同方式进行处理。</p>
-<p>只读页面：对于不具有PTE_D权限位的页面，按照相同权限（只读）映射给子进程即可。</p>
-<p>写时复制页面：即具有PTE_COW 权限位的页面。这类页面是之前的 fork 时 duppage 的结 果，且在本次fork前必然未被写入过。</p>
-<p>共享页面：即具有PTE_LIBRARY 权限位的页面。这类页面需要保持共享可写的状态，即在 父子进程中映射到相同的物理页，使对其进行修改的结果相互可见。在文件系统部分的实 验中，我们会使用到这样的页面。</p>
-<p>可写页面：即具有PTE_D权限位，且不符合以上特殊情况的页面。这类页面需要在父进程和 子进程的页表项中都使用PTE_COW权限位进行保护。</p>
-<p>我们只需判断perm是否具有PTE_D同时不具有PTE_LIBRARY，如果满足条件，则还需调用syscall_mem_map函数将当前进程映射到其自身页面上：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">r &#x3D; 0;</span><br><span class="line">	if ((perm &amp; PTE_D) &amp;&amp; ((perm &amp; PTE_LIBRARY) &#x3D;&#x3D; 0)) &#123;</span><br><span class="line">		perm &#x3D; perm &amp; ~PTE_D | PTE_COW;</span><br><span class="line">		r &#x3D; 1;</span><br><span class="line">		try(syscall_mem_map(0, addr, envid, addr, perm));</span><br><span class="line">	&#125; else &#123;</span><br><span class="line">		try(syscall_mem_map(0, addr, envid, addr, perm));</span><br><span class="line">	&#125;</span><br><span class="line">	 </span><br><span class="line">	if (r) &#123;</span><br><span class="line">		try(syscall_mem_map(0, addr, 0, addr, perm));</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="三、体会与感想"><a href="#三、体会与感想" class="headerlink" title="三、体会与感想"></a>三、体会与感想</h4><p>本次实验对主要需要掌握：系统调用，IPC通信机制，fork进程创建，页面写入异常处理，难度相较而言比较大，需要更仔细。</p>
+<p><img src="/2024-05-12-BUAA-OS-lab5/1.png"></p>
+<p>ENV_CREATE(user_env)箭头：init&#x2F;中创建用户进程，进程在user&#x2F;中运行。</p>
+<p>ENV_CREATE(fs_serv)箭头：init&#x2F;中创建文件系统进程，进程在fs&#x2F;中运行。</p>
+<p>ipc_send(fsreq)箭头：用户进程执行打开文件操作，通过ipc将请AAA求发送给文件系统进程。</p>
+<p>ipc_send(dst_va)箭头：文件系统进程收到请求后处理之后，向用户进程发送结果。</p>
+<p>我们的操作系统是通过系统调用，将源地址的数据传输到目标地址中从而实现进程间的通信。</p>
+<h4 id="二、实验难点"><a href="#二、实验难点" class="headerlink" title="二、实验难点"></a>二、实验难点</h4><h5 id="难点1：理解目录、文件、磁盘块以及索引节点的关系"><a href="#难点1：理解目录、文件、磁盘块以及索引节点的关系" class="headerlink" title="难点1：理解目录、文件、磁盘块以及索引节点的关系"></a>难点1：理解目录、文件、磁盘块以及索引节点的关系</h5><p><img src="/2024-05-12-BUAA-OS-lab5/2.png"></p>
+<ul>
+<li>目录是文件，文件目录是目录</li>
+<li>文件中的数据保存在磁盘块中，可以通过直接索引获得文件信息，如果文件较大，则通过间接索引指向目录，再通过目录获得更多磁盘块用于存储文件信息。</li>
+</ul>
+<h5 id="难点2：理解文件系统服务进程如何服务用户进程"><a href="#难点2：理解文件系统服务进程如何服务用户进程" class="headerlink" title="难点2：理解文件系统服务进程如何服务用户进程"></a>难点2：理解文件系统服务进程如何服务用户进程</h5><p><img src="/2024-05-12-BUAA-OS-lab5/3.png"></p>
+<p>用户进程需要通过进程间通信请求文件系统服务，将请求的内容放在对应的结构体中进行消息的传递， fs_serv 进程收到其他进行的 IPC 请求后，IPC 传递的消息包含了请求的类型和其他必要的参 数，根据请求的类型执行相应的文件操作（文件的增、删、改、查等），将结果重新通过IPC反 馈给用户程序。</p>
+<h5 id="三、实验体会"><a href="#三、实验体会" class="headerlink" title="三、实验体会"></a>三、实验体会</h5><p>在lab5我们实现了文件系统的构建，了解文件系统的基本概念和作用，掌握并实现文件系统服务的基本操作，其中运用的类似于面向对象中的继承和接口设计，底层向上层暴露封装好的接口，掩盖掉实现的细节的思想在我们后续的学习过程中有很大的意义，值得我们认真学习。</p>
 
                 
                 <hr>
                 <!-- Pager -->
                 <ul class="pager">
                     
-                    <li class="previous">
-                        <a href="/2024/04/25/LLM-Learning/" data-toggle="tooltip" data-placement="top" title="LLM_Learning">&larr; Previous Post</a>
-                    </li>
-                    
                     
                     <li class="next">
-                        <a href="/2024/04/08/BUAA-OS-lab3/" data-toggle="tooltip" data-placement="top" title="BUAA-OS-lab3">Next Post &rarr;</a>
+                        <a href="/2024/04/25/LLM-Learning/" data-toggle="tooltip" data-placement="top" title="LLM_Learning">Next Post &rarr;</a>
                     </li>
                     
                 </ul>
@@ -466,7 +438,7 @@
           <strong class="toc-title">Contents</strong>
           
             
-              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OS-Lab4"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA-OS-Lab4</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#一、思考题"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、思考题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-1"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Thinking 4.1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-2"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">Thinking 4.2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-3"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">Thinking 4.3</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-4"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">Thinking 4.4</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-5"><span class="toc-nav-number">1.1.5.</span> <span class="toc-nav-text">Thinking 4.5</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-6"><span class="toc-nav-number">1.1.6.</span> <span class="toc-nav-text">Thinking 4.6</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-7"><span class="toc-nav-number">1.1.7.</span> <span class="toc-nav-text">Thinking 4.7</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-8"><span class="toc-nav-number">1.1.8.</span> <span class="toc-nav-text">Thinking 4.8</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-4-9"><span class="toc-nav-number">1.1.9.</span> <span class="toc-nav-text">Thinking 4.9</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#二、实验难点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、实验难点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#do-syscall函数"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">do-syscall函数</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#envid2env函数"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">envid2env函数</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#sys-exofork函数"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">sys_exofork函数</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#duppage函数"><span class="toc-nav-number">1.2.4.</span> <span class="toc-nav-text">duppage函数</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#三、体会与感想"><span class="toc-nav-number">1.3.</span> <span class="toc-nav-text">三、体会与感想</span></a></li></ol></li></ol>
+              <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#BUAA-OS-Lab5"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">BUAA-OS-Lab5</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#一、思考题"><span class="toc-nav-number">1.1.</span> <span class="toc-nav-text">一、思考题</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-1"><span class="toc-nav-number">1.1.1.</span> <span class="toc-nav-text">Thinking 5.1</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-2"><span class="toc-nav-number">1.1.2.</span> <span class="toc-nav-text">Thinking 5.2</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-3"><span class="toc-nav-number">1.1.3.</span> <span class="toc-nav-text">Thinking 5.3</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-4"><span class="toc-nav-number">1.1.4.</span> <span class="toc-nav-text">Thinking 5.4</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-5"><span class="toc-nav-number">1.1.5.</span> <span class="toc-nav-text">Thinking 5.5</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-6"><span class="toc-nav-number">1.1.6.</span> <span class="toc-nav-text">Thinking 5.6</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#Thinking-5-7"><span class="toc-nav-number">1.1.7.</span> <span class="toc-nav-text">Thinking 5.7</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-4"><a class="toc-nav-link" href="#二、实验难点"><span class="toc-nav-number">1.2.</span> <span class="toc-nav-text">二、实验难点</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#难点1：理解目录、文件、磁盘块以及索引节点的关系"><span class="toc-nav-number">1.2.1.</span> <span class="toc-nav-text">难点1：理解目录、文件、磁盘块以及索引节点的关系</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#难点2：理解文件系统服务进程如何服务用户进程"><span class="toc-nav-number">1.2.2.</span> <span class="toc-nav-text">难点2：理解文件系统服务进程如何服务用户进程</span></a></li><li class="toc-nav-item toc-nav-level-5"><a class="toc-nav-link" href="#三、实验体会"><span class="toc-nav-number">1.2.3.</span> <span class="toc-nav-text">三、实验体会</span></a></li></ol></li></ol></li></ol>
             
           
           </div>
