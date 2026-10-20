@@ -20,7 +20,7 @@
     const dark = root.dataset.theme === 'dark';
     themeButton.setAttribute('aria-pressed', String(dark));
     themeButton.setAttribute('aria-label', root.lang === 'zh-CN' ? (dark ? '切换到浅色模式' : '切换到深色模式') : (dark ? 'Switch to light mode' : 'Switch to dark mode'));
-    document.querySelector('meta[name="theme-color"]').content = dark ? '#171e1a' : '#f8f9f6';
+    document.querySelector('meta[name="theme-color"]').content = dark ? '#111111' : '#ffffff';
   }
   const savedTheme = readPreference('rw-theme');
   root.dataset.theme = savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light';

@@ -4,20 +4,21 @@ Personal academic homepage, hosted by **GitHub Pages** at:
 
 **https://wrf2004.github.io/**
 
-The homepage is plain HTML, CSS, and JavaScript. There is no Node.js install or application build step. GitHub Pages publishes changes from the existing `master` branch.
+The homepage uses plain HTML, CSS, and JavaScript. GitHub Pages publishes the generated `index.html` from the existing `master` branch. No server or Node.js dependencies are required.
 
 ## Content and design
 
-- `index.html`: biography, research, projects, education, awards, and both languages.
+- `_source/index.html`: editable biography, research, projects, education, awards, and both languages.
+- `index.html`: generated self-contained homepage with inline CSS, JavaScript, and compressed portraits.
 - `site/style.css`: responsive layout, colors, typography, dark mode, and print styling.
 - `site/app.js`: language and theme preferences and section navigation.
 - `site/favicon.svg`: RW monogram.
 - `_config.yml`: GitHub Pages settings; excludes the old template's demonstration pages.
 - `404.html`, `robots.txt`, and `sitemap.xml`: error page and search indexing.
 
-To edit bilingual text, update **both** `data-en` and `data-zh` on the corresponding element in `index.html`. Keep the element's default content equal to `data-en` so the English page also works without JavaScript. Both language attributes may contain HTML; use single quotes inside attribute values as in the existing examples. Language and theme choices are stored only in the visitor's browser.
+To edit bilingual text, update **both** `data-en` and `data-zh` on the corresponding element in `_source/index.html`. Keep the element's default content equal to `data-en` so the English page also works without JavaScript. Both language attributes may contain HTML; use single quotes inside attribute values as in the existing examples. Language and theme choices are stored only in the visitor's browser. After changing content, CSS, or JavaScript, run `python3 scripts/build_homepage.py` and commit the updated `index.html` alongside the source edits.
 
-The profile photo is `site/portrait.jpg`, supplied by Ruifeng Wang. The original image is preserved; CSS adapts its frame for desktop and mobile. The contact link points to the public GitHub profile. Add a public email address only when ready to display it.
+The original profile photo is preserved as `site/portrait.jpg` (408,262 bytes), but the homepage does not request it. The compressed variants are `site/portrait-160.webp` (3,458 bytes) for mobile and `site/portrait-480.webp` (17,728 bytes) for desktop. Both are inlined in the HTML to avoid an additional network round trip. `site/portrait-480.jpg` is a fallback for browsers without WebP support. CSS presents the photo in grayscale. The contact link points to the public GitHub profile. Add a public email address only when ready to display it.
 
 ## Publication record
 
@@ -32,6 +33,12 @@ python3 -m http.server 8000
 ```
 
 Then open http://localhost:8000/. No backend, API keys, analytics, or third-party JavaScript are required.
+
+## Performance
+
+Modern browsers render the homepage using one HTML request: the CSS, JavaScript, favicon, and responsive WebP portraits are embedded. There are no web fonts, image hosts, or external scripts on the rendering path. The generated page is about 62 KB before HTTP compression; the build script reports its size and a gzip estimate. Repository size and the retained original photo do not increase a page visit's transfer size.
+
+This removes avoidable resource round trips and stale CSS/HTML combinations, but cannot eliminate latency in the visitor's connection to GitHub Pages. A measurement from the development environment before optimization showed HTML time to first byte around 8.2 seconds. That measurement is route-specific, not a benchmark for every visitor. Improving a slow HTML connection requires changing the whole site's delivery path, rather than just using an image host.
 
 ## Deployment and recovery
 
