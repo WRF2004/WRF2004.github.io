@@ -42,6 +42,8 @@ This removes avoidable resource round trips and stale CSS/HTML combinations, but
 
 ## Deployment and recovery
 
+The repository also includes `vercel.json` and `scripts/export_site.py` for an alternate Vercel deployment. The export has been verified locally; a Vercel account must still be connected and the project deployed before a new URL exists. See [DEPLOYMENT.md](DEPLOYMENT.md) for exact settings and verification steps. GitHub Pages continues to use the existing root homepage.
+
 Push or commit edits to `master` and check the **pages build and deployment** run in the repository's Actions tab. GitHub Pages uses the repository root as the publishing source. The existing Academic Pages files are retained as source, with sample content excluded by `_config.yml`. To restore the former homepage, revert the homepage update commit, including `_config.yml`.
 
 ## Checks performed
