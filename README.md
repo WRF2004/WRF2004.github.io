@@ -17,7 +17,7 @@ The homepage is plain HTML, CSS, and JavaScript. There is no Node.js install or 
 
 To edit bilingual text, update **both** `data-en` and `data-zh` on the corresponding element in `index.html`. Keep the element's default content equal to `data-en` so the English page also works without JavaScript. Both language attributes may contain HTML; use single quotes inside attribute values as in the existing examples. Language and theme choices are stored only in the visitor's browser.
 
-The photo area currently uses an original RW monogram. Replace it with a chosen professional portrait when desired. The contact link points to the public GitHub profile. Add a public email address only when ready to display it.
+The profile photo is `site/portrait.jpg`, supplied by Ruifeng Wang. The original image is preserved; CSS adapts its frame for desktop and mobile. The contact link points to the public GitHub profile. Add a public email address only when ready to display it.
 
 ## Publication record
 
